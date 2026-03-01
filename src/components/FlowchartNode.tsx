@@ -60,7 +60,7 @@ export default function FlowchartNode({
         )}
         {hasDetails && (
           <span className="flow-node-toggle">
-            {expanded ? '▲ Less' : '▼ Details'}
+            {expanded ? '▲ Menos' : '▼ Detalhes'}
           </span>
         )}
       </div>

@@ -174,6 +174,80 @@ function DiagnosticoTab() {
           </div>
         </div>
       </div>
+
+      <div className="content-section" style={{ '--item-accent': '#5b6abf' } as React.CSSProperties}>
+        <div className="content-section-header">
+          <div className="content-section-icon">🔀</div>
+          <div>
+            <div className="content-section-title">Diagnósticos Diferenciais</div>
+            <div className="content-section-subtitle">Condições que mimetizam anafilaxia</div>
+          </div>
+        </div>
+        <div className="content-table-wrapper">
+          <table className="content-table">
+            <thead>
+              <tr>
+                <th>Característica</th>
+                <th>Anafilaxia</th>
+                <th>Reação Vasovagal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Frequência Cardíaca</strong></td>
+                <td>Taquicardia</td>
+                <td>Bradicardia</td>
+              </tr>
+              <tr>
+                <td><strong>Pressão Arterial</strong></td>
+                <td>Hipotensão</td>
+                <td>Hipotensão</td>
+              </tr>
+              <tr>
+                <td><strong>Pele</strong></td>
+                <td>Urticária, flushing, quente</td>
+                <td>Pálida, fria, sudorese</td>
+              </tr>
+              <tr>
+                <td><strong>Respiratório</strong></td>
+                <td>Broncoespasmo, estridor</td>
+                <td>Normal</td>
+              </tr>
+              <tr>
+                <td><strong>Resposta a posição</strong></td>
+                <td>Melhora parcial</td>
+                <td>Melhora rápida</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="content-list" style={{ marginTop: 'var(--space-md)' }}>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Broncoespasmo isolado:</strong> Crise de asma, aspiração de corpo estranho</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Síndrome do homem vermelho:</strong> Infusão rápida de vancomicina (não mediada por IgE)</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Reação à protamina:</strong> Hipotensão + broncoespasmo após reversão de heparina</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Choque séptico:</strong> Hipotensão distributiva, porém com evolução mais lenta</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>TEP:</strong> Hipotensão súbita + hipóxia, sem manifestações cutâneas</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Mastocitose sistêmica:</strong> Episódios recorrentes de flushing e hipotensão</span>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
@@ -308,6 +382,58 @@ function ClassificacaoTab() {
           </div>
         </div>
       </div>
+
+      <div className="content-alert content-alert--info">
+        <span className="content-alert-icon">🏥</span>
+        <div>
+          <div className="content-alert-title">Anafilaxia no Contexto Perioperatório</div>
+          <div className="content-alert-text">
+            No bloco cirúrgico, a hipotensão é frequentemente o PRIMEIRO e ÚNICO sinal de anafilaxia,
+            pois campos cirúrgicos cobrem a pele. 15% dos pacientes pioram quando hipotensão pós-droga
+            não é valorizada. Sempre considerar anafilaxia no diagnóstico diferencial de hipotensão inexplicada.
+          </div>
+        </div>
+      </div>
+
+      <div className="content-section" style={{ '--item-accent': '#00897b' } as React.CSSProperties}>
+        <div className="content-section-header">
+          <div className="content-section-icon">🩺</div>
+          <div>
+            <div className="content-section-title">Particularidades em Anestesia</div>
+            <div className="content-section-subtitle">Dados do SAVA — Aula 8</div>
+          </div>
+        </div>
+        <div className="content-list">
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Via IV preferida sobre IM:</strong> No perioperatório, usa-se epinefrina IV (acesso venoso já disponível), permitindo titular a dose com precisão</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Teicoplanina:</strong> 17x mais comum como causa de anafilaxia perioperatória (independe de reação prévia a penicilina)</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Bloqueadores neuromusculares:</strong> Principal causa de anafilaxia perioperatória, responsáveis pela maioria dos casos</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Látex:</strong> Atenção especial em pacientes com múltiplas exposições (ex: espinha bífida, profissionais de saúde)</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Prognóstico:</strong> Anestesiologista com ação proativa alcança {'>'} 96% de sobrevivência nos casos de anafilaxia</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Populações de risco:</strong> Idosos e obesos apresentam maior risco de PCR e óbito</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Impacto psicológico:</strong> 1/3 dos pacientes apresenta medo e ansiedade em relação a anestesias futuras</span>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
@@ -425,6 +551,25 @@ function TratamentoTab() {
           />
           <FlowchartArrow direction="down" />
           <FlowchartNode
+            type="decision"
+            title="REFRATÁRIO AO TRATAMENTO?"
+            items={['≥3 doses de epinefrina ou infusão IV sem resposta adequada']}
+          />
+          <FlowchartArrow direction="down" label="SIM" />
+          <FlowchartNode
+            type="critical"
+            title="ANAFILAXIA REFRATÁRIA"
+            stepNumber={8}
+            items={[
+              'Vasopressina: 2 UI bolus + 2 UI/hora em infusão',
+              'Norepinefrina: considerar se refratário a epinefrina',
+              'Azul de metileno: 1–2 mg/kg IV em 20–60 min (inibe óxido nítrico)',
+              'ECMO: considerar em centros com equipe treinada',
+              'Anafilaxia perioperatória refratária tem alta mortalidade',
+            ]}
+          />
+          <FlowchartArrow direction="down" />
+          <FlowchartNode
             type="info"
             title="OBSERVAÇÃO E SEGUIMENTO"
             items={[
@@ -448,6 +593,16 @@ function TratamentoTab() {
             ]}
           />
           <DosePanel
+            title="Doses IV por Grau (Anestesia)"
+            accentColor="#d84315"
+            items={[
+              { label: 'Grau 2 (moderado)', detail: 'Epinefrina 100–300 μg IV escalonada' },
+              { label: 'Grau 3 (grave)', detail: 'Epinefrina 100–200 μg IV a cada 1–2 min' },
+              { label: 'Grau 4 (PCR)', detail: 'Epinefrina 1 mg IV (dose padrão PCR)' },
+              { label: 'Obs.', detail: 'Na anestesia: via IV (NÃO IM) — acesso já disponível' },
+            ]}
+          />
+          <DosePanel
             title="Expansão Volêmica"
             accentColor="#1565c0"
             items={[
@@ -467,7 +622,127 @@ function TratamentoTab() {
               { label: 'Glucagon', detail: '1–5 mg IV se β-bloqueador' },
             ]}
           />
+          <DosePanel
+            title="Anafilaxia Refratária"
+            accentColor="#7b1fa2"
+            items={[
+              { label: 'Vasopressina', detail: '2 UI bolus + 2 UI/hora' },
+              { label: 'Norepinefrina', detail: 'Titular conforme resposta' },
+              { label: 'Azul de metileno', detail: '1–2 mg/kg IV em 20–60 min' },
+              { label: 'ECMO', detail: 'Se disponível, acionar equipe precocemente' },
+            ]}
+          />
         </aside>
+      </div>
+
+      <div className="content-alert content-alert--warning" style={{ maxWidth: '900px' }}>
+        <span className="content-alert-icon">⚠️</span>
+        <div>
+          <div className="content-alert-title">Doses IV na Anestesia (Escala de Higgins e Mesa)</div>
+          <div className="content-alert-text">
+            No contexto anestésico, a epinefrina é administrada por via IV (NÃO intramuscular),
+            por já haver acesso venoso disponível e por permitir titular a dose com precisão.
+          </div>
+        </div>
+      </div>
+
+      <div className="content-section" style={{ '--item-accent': '#d84315', maxWidth: '900px' } as React.CSSProperties}>
+        <div className="content-section-header">
+          <div className="content-section-icon">💉</div>
+          <div>
+            <div className="content-section-title">Tratamento por Grau de Gravidade (Perioperatório)</div>
+            <div className="content-section-subtitle">Escala de Higgins e Mesa — adaptada SAVA</div>
+          </div>
+        </div>
+        <div className="content-table-wrapper">
+          <table className="content-table">
+            <thead>
+              <tr>
+                <th>Grau</th>
+                <th>Epinefrina IV</th>
+                <th>Adjuvantes</th>
+                <th>Observação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1 — Cutâneo</strong></td>
+                <td>Não necessária</td>
+                <td>Anti-H1/H2 + Hidrocortisona 250 mg IV</td>
+                <td>Apenas reação cutânea</td>
+              </tr>
+              <tr>
+                <td><strong>2 — Moderado</strong></td>
+                <td>100–300 μg IV escalonada</td>
+                <td>Grau 1 + beta-agonista inalatório</td>
+                <td>Hipotensão ou broncoespasmo</td>
+              </tr>
+              <tr>
+                <td><strong>3 — Grave</strong></td>
+                <td>100–200 μg IV a cada 1–2 min</td>
+                <td>Glucagon + Vasopressina + Azul de metileno</td>
+                <td style={{ color: '#e94560' }}>Choque — dose duplicada</td>
+              </tr>
+              <tr>
+                <td><strong>4 — PCR</strong></td>
+                <td>1 mg IV (dose padrão PCR)</td>
+                <td>Vasopressina 40 UI + Protocolo ACLS</td>
+                <td style={{ color: '#c62828' }}>Protocolo de PCR padrão</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="content-section" style={{ '--item-accent': '#1565c0', maxWidth: '900px' } as React.CSSProperties}>
+        <div className="content-section-header">
+          <div className="content-section-icon">📋</div>
+          <div>
+            <div className="content-section-title">Manejo Pós-Evento</div>
+            <div className="content-section-subtitle">Documentação e seguimento — SAVA Doc2</div>
+          </div>
+        </div>
+        <div className="content-list">
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>UTI por 24 horas:</strong> Risco de recorrência (reação bifásica em até 20% dos casos)</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Corticoide por 72 horas:</strong> Metilprednisolona ou Hidrocortisona em doses regressivas</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Triptase sérica — 3 amostras:</strong> Imediata, 1–2 horas e {'>'} 24 horas após o evento</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Documentação detalhada:</strong> Todas as medicações com horários, momento exato do evento, progressão dos sintomas</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Encaminhamento ao imunologista:</strong> Com relatório cronológico detalhado (investigação pode demorar {'>'} 100 dias)</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Prescrever autoinjector:</strong> Epinefrina para uso em emergência na alta hospitalar</span>
+          </div>
+          <div className="content-list-item">
+            <span className="content-list-item-bullet">•</span>
+            <span><strong>Prevenção:</strong> Histórico detalhado de alergias no pré-anestésico; comunicação entre anestesiologista e alergologista</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="content-alert content-alert--success" style={{ maxWidth: '900px' }}>
+        <span className="content-alert-icon">✅</span>
+        <div>
+          <div className="content-alert-title">Prognóstico</div>
+          <div className="content-alert-text">
+            PCR por anafilaxia geralmente tem BOM prognóstico se tratada adequadamente e precocemente.
+            Anestesiologista com ação proativa alcança {'>'} 96% de sobrevivência nos casos de anafilaxia.
+          </div>
+        </div>
       </div>
     </>
   );

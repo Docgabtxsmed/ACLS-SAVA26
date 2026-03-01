@@ -7,162 +7,162 @@ import './AlgoPage.css';
 export default function CardiacArrestPage() {
   return (
     <div className="algo-page">
-      <Navbar title="Adult Cardiac Arrest Algorithm" showBack />
+      <Navbar title="Algoritmo de PCR no Adulto" showBack />
 
       <header className="algo-page-header">
         <span className="algo-page-icon">💔</span>
-        <h1 className="algo-page-title">Adult Cardiac Arrest Algorithm</h1>
-        <span className="algo-page-case">ACLS Cases 6</span>
+        <h1 className="algo-page-title">Algoritmo de PCR no Adulto</h1>
+        <span className="algo-page-case">Caso 6</span>
       </header>
 
       <div className="flowchart-layout">
         <div className="flowchart-main">
 
-          {/* Start */}
+          {/* Início */}
           <FlowchartNode
             type="start"
-            title="ACTIVATE EMERGENCY RESPONSE"
+            title="ATIVAR RESPOSTA DE EMERGÊNCIA"
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* Step 1 */}
+          {/* Passo 1 */}
           <FlowchartNode
             type="action"
-            title="START CPR"
+            title="INICIAR RCP"
             stepNumber={1}
             items={[
-              'Give oxygen',
-              'Attach monitor/defibrillator',
+              'Administrar oxigênio',
+              'Conectar monitor/desfibrilador',
             ]}
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* Decision: Shockable? */}
+          {/* Decisão: Ritmo chocável? */}
           <FlowchartNode
             type="decision"
-            title="SHOCKABLE RHYTHM?"
-            items={['Check rhythm on monitor']}
+            title="RITMO CHOCÁVEL?"
+            items={['Verificar ritmo no monitor']}
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* Branch: VF/pVT vs Asystole/PEA */}
+          {/* Ramo: FV/TVsp vs Assistolia/AESP */}
           <div className="flowchart-branch">
 
-            {/* LEFT: Shockable (VF/pVT) */}
+            {/* ESQUERDA: Chocável (FV/TVsp) */}
             <div className="flowchart-branch-path">
-              <span className="flowchart-branch-label flowchart-branch-label--yes">YES — VF/pVT</span>
+              <span className="flowchart-branch-label flowchart-branch-label--yes">SIM — FV/TVsp</span>
 
               <FlowchartArrow direction="down" />
-              <FlowchartNode type="action" title="VF/pVT" stepNumber={2} />
+              <FlowchartNode type="action" title="FV/TVsp" stepNumber={2} />
 
               <FlowchartArrow direction="down" />
-              <FlowchartNode type="critical" title="ADMINISTER SHOCK" stepNumber={3} />
+              <FlowchartNode type="critical" title="APLICAR CHOQUE" stepNumber={3} />
 
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="action"
-                title="CPR FOR TWO MINUTES"
+                title="RCP POR DOIS MINUTOS"
                 stepNumber={4}
-                items={['IV/IO access']}
+                items={['Acesso IV/IO']}
               />
 
               <FlowchartArrow direction="down" />
-              <FlowchartNode type="decision" title="SHOCKABLE RHYTHM?" />
+              <FlowchartNode type="decision" title="RITMO CHOCÁVEL?" />
 
-              <FlowchartArrow direction="down" label="YES" />
-              <FlowchartNode type="critical" title="ADMINISTER SHOCK" stepNumber={5} />
+              <FlowchartArrow direction="down" label="SIM" />
+              <FlowchartNode type="critical" title="APLICAR CHOQUE" stepNumber={5} />
 
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="action"
-                title="CPR FOR TWO MINUTES"
+                title="RCP POR DOIS MINUTOS"
                 stepNumber={6}
                 items={[
-                  'Epinephrine every 3 to 5 min',
-                  'Consider advanced airway and capnography',
+                  'Epinefrina a cada 3 a 5 min',
+                  'Considerar via aérea avançada e capnografia',
                 ]}
               />
 
               <FlowchartArrow direction="down" />
-              <FlowchartNode type="decision" title="SHOCKABLE RHYTHM?" />
+              <FlowchartNode type="decision" title="RITMO CHOCÁVEL?" />
 
-              <FlowchartArrow direction="down" label="YES" />
-              <FlowchartNode type="critical" title="ADMINISTER SHOCK" stepNumber={7} />
+              <FlowchartArrow direction="down" label="SIM" />
+              <FlowchartNode type="critical" title="APLICAR CHOQUE" stepNumber={7} />
 
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="action"
-                title="CPR FOR TWO MINUTES"
+                title="RCP POR DOIS MINUTOS"
                 stepNumber={8}
                 items={[
-                  'Amiodarone or Lidocaine',
-                  'Treat reversible causes',
+                  'Amiodarona ou Lidocaína',
+                  'Tratar causas reversíveis',
                 ]}
               />
 
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="info"
-                title="ASSESS ROSC"
+                title="AVALIAR RCE"
                 items={[
-                  'If no signs of ROSC, go to step 5 or 7',
-                  'If signs of ROSC, go to Post-Cardiac Arrest Care',
+                  'Se sem sinais de RCE, ir para passo 5 ou 7',
+                  'Se sinais de RCE, ir para Cuidados Pós-PCR',
                 ]}
               />
             </div>
 
-            {/* RIGHT: Non-Shockable (Asystole/PEA) */}
+            {/* DIREITA: Não Chocável (Assistolia/AESP) */}
             <div className="flowchart-branch-path">
-              <span className="flowchart-branch-label flowchart-branch-label--no">NO — Asystole/PEA</span>
+              <span className="flowchart-branch-label flowchart-branch-label--no">NÃO — Assistolia/AESP</span>
 
               <FlowchartArrow direction="down" />
-              <FlowchartNode type="action" title="ASYSTOLE/PEA" stepNumber={9} />
+              <FlowchartNode type="action" title="ASSISTOLIA/AESP" stepNumber={9} />
 
               <FlowchartArrow direction="down" />
-              <FlowchartNode type="critical" title="EPINEPHRINE ASAP" />
+              <FlowchartNode type="critical" title="EPINEFRINA IMEDIATA" />
 
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="action"
-                title="CPR FOR TWO MINUTES"
+                title="RCP POR DOIS MINUTOS"
                 stepNumber={10}
                 items={[
-                  'Epinephrine every 3 to 5 min',
-                  'Consider advanced airway and capnography',
+                  'Epinefrina a cada 3 a 5 min',
+                  'Considerar via aérea avançada e capnografia',
                 ]}
               />
 
               <FlowchartArrow direction="down" />
-              <FlowchartNode type="decision" title="SHOCKABLE RHYTHM?" />
+              <FlowchartNode type="decision" title="RITMO CHOCÁVEL?" />
 
-              <FlowchartArrow direction="down" label="NO" />
+              <FlowchartArrow direction="down" label="NÃO" />
               <FlowchartNode
                 type="action"
-                title="CPR TWO MINUTES"
+                title="RCP POR DOIS MINUTOS"
                 stepNumber={11}
-                items={['Treat reversible causes']}
+                items={['Tratar causas reversíveis']}
               />
 
               <FlowchartArrow direction="down" />
-              <FlowchartNode type="decision" title="SHOCKABLE RHYTHM?" />
+              <FlowchartNode type="decision" title="RITMO CHOCÁVEL?" />
 
-              <FlowchartArrow direction="down" label="YES" />
+              <FlowchartArrow direction="down" label="SIM" />
               <FlowchartNode
                 type="warning"
-                title="GO TO STEP 5 OR 7"
-                items={['Switch to shockable rhythm pathway']}
+                title="IR PARA PASSO 5 OU 7"
+                items={['Mudar para via de ritmo chocável']}
               />
 
-              <FlowchartArrow direction="down" label="NO" />
+              <FlowchartArrow direction="down" label="NÃO" />
               <FlowchartNode
                 type="info"
-                title="ASSESS ROSC"
+                title="AVALIAR RCE"
                 items={[
-                  'If no signs of ROSC, go to step 10 or 11',
-                  'If signs of ROSC, go to Post-Cardiac Arrest Care',
+                  'Se sem sinais de RCE, ir para passo 10 ou 11',
+                  'Se sinais de RCE, ir para Cuidados Pós-PCR',
                 ]}
               />
             </div>
@@ -172,30 +172,30 @@ export default function CardiacArrestPage() {
         {/* Sidebar: Doses */}
         <aside className="flowchart-sidebar">
           <DosePanel
-            title="Medications"
+            title="Medicações"
             accentColor="#c0392b"
             items={[
-              { label: 'Epinephrine', detail: '1 mg IV/IO every 3–5 minutes' },
-              { label: 'Amiodarone (1st dose)', detail: '300 mg bolus IV/IO' },
-              { label: 'Amiodarone (2nd dose)', detail: '150 mg IV/IO' },
-              { label: 'Lidocaine (1st dose)', detail: '1–1.5 mg/kg IV/IO' },
-              { label: 'Lidocaine (subsequent)', detail: '0.5–0.75 mg/kg IV/IO' },
+              { label: 'Epinefrina', detail: '1 mg IV/IO a cada 3–5 minutos' },
+              { label: 'Amiodarona (1ª dose)', detail: '300 mg bolus IV/IO' },
+              { label: 'Amiodarona (2ª dose)', detail: '150 mg IV/IO' },
+              { label: 'Lidocaína (1ª dose)', detail: '1–1,5 mg/kg IV/IO' },
+              { label: 'Lidocaína (subsequentes)', detail: '0,5–0,75 mg/kg IV/IO' },
             ]}
           />
           <DosePanel
-            title="H's and T's (Reversible Causes)"
+            title="5H's e 5T's (Causas Reversíveis)"
             accentColor="#5b6abf"
             items={[
-              { label: 'H — Hypovolemia', detail: 'Volume resuscitation' },
-              { label: 'H — Hypoxia', detail: 'Oxygenation/ventilation' },
-              { label: 'H — Hydrogen Ion', detail: 'Acidosis correction' },
-              { label: 'H — Hypo/Hyperkalemia', detail: 'Electrolyte correction' },
-              { label: 'H — Hypothermia', detail: 'Rewarming' },
-              { label: 'T — Tension Pneumothorax', detail: 'Needle decompression' },
-              { label: 'T — Tamponade (cardiac)', detail: 'Pericardiocentesis' },
-              { label: 'T — Toxins', detail: 'Specific antidotes' },
-              { label: 'T — Thrombosis (coronary)', detail: 'PCI / fibrinolytics' },
-              { label: 'T — Thrombosis (pulmonary)', detail: 'Embolectomy / fibrinolytics' },
+              { label: 'H — Hipovolemia', detail: 'Reposição volêmica' },
+              { label: 'H — Hipóxia', detail: 'Oxigenação/ventilação' },
+              { label: 'H — Hidrogênio (acidose)', detail: 'Correção de acidose' },
+              { label: 'H — Hipo/Hipercalemia', detail: 'Correção eletrolítica' },
+              { label: 'H — Hipotermia', detail: 'Reaquecimento' },
+              { label: 'T — Tensão (pneumotórax)', detail: 'Descompressão por agulha' },
+              { label: 'T — Tamponamento cardíaco', detail: 'Pericardiocentese' },
+              { label: 'T — Toxinas', detail: 'Antídotos específicos' },
+              { label: 'T — Trombose coronariana', detail: 'ICP / fibrinolíticos' },
+              { label: 'T — Trombose pulmonar', detail: 'Embolectomia / fibrinolíticos' },
             ]}
           />
         </aside>

@@ -36,7 +36,7 @@ export default function TachycardiaPage() {
       <header className="algo-page-header">
         <span className="algo-page-icon">⚡</span>
         <h1 className="algo-page-title">Algoritmo de Taquiarritmias</h1>
-        <span className="algo-page-case">Adult Tachycardia with Pulse — ACLS</span>
+        <span className="algo-page-case">Taquicardia com Pulso no Adulto — ACLS</span>
       </header>
 
       {/* ═══════════════════════════════════════════════════════

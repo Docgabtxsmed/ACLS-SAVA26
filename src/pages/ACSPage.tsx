@@ -7,72 +7,72 @@ import './AlgoPage.css';
 export default function ACSPage() {
   return (
     <div className="algo-page">
-      <Navbar title="Acute Coronary Syndrome" showBack />
+      <Navbar title="Síndrome Coronariana Aguda" showBack />
 
       <header className="algo-page-header">
         <span className="algo-page-icon">🫀</span>
-        <h1 className="algo-page-title">Adult Coronary Syndrome Algorithm</h1>
-        <span className="algo-page-case">ACLS Cases 7</span>
+        <h1 className="algo-page-title">Algoritmo de Síndrome Coronariana Aguda</h1>
+        <span className="algo-page-case">Caso 7</span>
       </header>
 
       <div className="flowchart-layout">
         <div className="flowchart-main">
 
-          {/* Start */}
+          {/* Início */}
           <FlowchartNode
             type="start"
-            title="SYMPTOMS OF INFARCTION OR ISCHEMIA"
+            title="SINTOMAS DE INFARTO OU ISQUEMIA"
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* EMS Assessment */}
+          {/* Avaliação SME */}
           <FlowchartNode
             type="critical"
-            title="EMS ASSESSMENT / HOSPITAL CARE"
+            title="AVALIAÇÃO SME / ATENDIMENTO HOSPITALAR"
             items={[
-              'Support ABCs; prepare for CPR/defibrillation',
-              'Give aspirin, morphine, nitroglycerin, and oxygen if needed',
-              'Obtain 12-lead ECG',
-              'If ST elevation:',
-              '  • Notify hospital; note first medical contact and onset time',
-              '  • Hospital should prepare to respond to STEMI',
-              '  • If prehospital fibrinolysis, use fibrinolytic checklist',
+              'Suporte ABC; preparar para RCP/desfibrilação',
+              'Administrar AAS, morfina, nitroglicerina e oxigênio se necessário',
+              'Obter ECG de 12 derivações',
+              'Se supradesnivelamento de ST:',
+              '  • Notificar hospital; anotar primeiro contato médico e início dos sintomas',
+              '  • Hospital deve se preparar para STEMI',
+              '  • Se fibrinólise pré-hospitalar, usar checklist fibrinolítico',
             ]}
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* ED Assessment */}
+          {/* Avaliação no PS */}
           <FlowchartNode
             type="action"
-            title="EMS / ED ASSESSMENT & TREATMENT"
+            title="AVALIAÇÃO E TRATAMENTO SME / PS"
             items={[
-              'Check vitals/O2 saturation',
-              'IV access',
-              'Perform targeted history/physical exam',
-              'Complete fibrinolytic checklist, check contraindications',
-              'Obtain preliminary cardiac marker levels',
-              'Obtain portable chest x-ray (<30min)',
-              'Immediate ED Treatment:',
-              '  • If O2 saturation <94%, start O2 at 4 L/min, titrate',
-              '  • Aspirin 160 to 325 mg PO',
-              '  • Nitroglycerin spray or sublingual',
-              '  • Morphine IV if nitroglycerin not effective',
+              'Verificar sinais vitais/saturação de O2',
+              'Acesso IV',
+              'Realizar anamnese e exame físico direcionados',
+              'Preencher checklist fibrinolítico, verificar contraindicações',
+              'Solicitar marcadores cardíacos iniciais',
+              'Obter radiografia de tórax portátil (<30 min)',
+              'Tratamento imediato no PS:',
+              '  • Se SatO2 <94%, iniciar O2 a 4 L/min, titular',
+              '  • AAS 160 a 325 mg VO (mastigar)',
+              '  • Nitroglicerina spray ou sublingual',
+              '  • Morfina IV se nitroglicerina ineficaz',
             ]}
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* ECG Interpretation Decision */}
+          {/* Decisão: Interpretação do ECG */}
           <FlowchartNode
             type="decision"
-            title="INTERPRET ECG"
+            title="INTERPRETAR ECG"
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* 3-way branch: STEMI / NSTEMI / Normal */}
+          {/* Ramo triplo: STEMI / NSTEMI / Normal */}
           <div className="flowchart-branch">
 
             {/* STEMI */}
@@ -81,90 +81,90 @@ export default function ACSPage() {
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="critical"
-                title="ST-ELEVATION OR NEW LBBB"
-                items={['High possibility for injury (STEMI)']}
+                title="SUPRA DE ST OU BRE NOVO"
+                items={['Alta probabilidade de lesão (STEMI)']}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="action"
-                title="BEGIN ADJUNCTIVE THERAPIES"
-                items={['Do not delay reperfusion']}
+                title="INICIAR TERAPIAS ADJUVANTES"
+                items={['Não atrasar a reperfusão']}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="decision"
-                title="ONSET TIME ≤12 HOURS?"
+                title="INÍCIO DOS SINTOMAS ≤12 HORAS?"
               />
-              <FlowchartArrow direction="down" label="YES" />
+              <FlowchartArrow direction="down" label="SIM" />
               <FlowchartNode
                 type="critical"
-                title="REPERFUSION GOALS"
+                title="METAS DE REPERFUSÃO"
                 items={[
-                  'Fibrinolysis (door-to-needle) goal less than 30 minutes',
-                  'PCI (door-to-balloon inflation) goal less than 90 minutes',
+                  'Fibrinólise (porta-agulha) meta < 30 minutos',
+                  'ICP (porta-balão) meta < 90 minutos',
                 ]}
               />
             </div>
 
             {/* NSTEMI */}
             <div className="flowchart-branch-path">
-              <span className="flowchart-branch-label" style={{ color: '#e67e22', background: 'rgba(230, 126, 34, 0.1)' }}>NSTEMI/UA</span>
+              <span className="flowchart-branch-label" style={{ color: '#e67e22', background: 'rgba(230, 126, 34, 0.1)' }}>NSTEMI/AI</span>
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="warning"
-                title="ST DEPRESSION / T-WAVE CHANGES"
+                title="INFRA DE ST / ALTERAÇÕES DE ONDA T"
                 items={[
-                  'High possibility for ischemia',
-                  'High-risk unstable angina / non-ST-elevation MI (UA/NSTEMI)',
+                  'Alta probabilidade de isquemia',
+                  'Angina instável de alto risco / IAM sem supra de ST (AI/NSTEMI)',
                 ]}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="action"
-                title="HIGH-RISK INDICATORS"
+                title="INDICADORES DE ALTO RISCO"
                 items={[
-                  'Elevated troponin or high-risk patient',
-                  'Early invasive strategy if:',
-                  '  • Ventricular tachycardia',
-                  '  • Signs of heart failure',
-                  '  • Hemodynamic instability',
-                  '  • Refractory ischemic chest discomfort',
-                  '  • Persistent/recurrent ST deviation',
+                  'Troponina elevada ou paciente de alto risco',
+                  'Estratégia invasiva precoce se:',
+                  '  • Taquicardia ventricular',
+                  '  • Sinais de insuficiência cardíaca',
+                  '  • Instabilidade hemodinâmica',
+                  '  • Dor torácica isquêmica refratária',
+                  '  • Desvio de ST persistente/recorrente',
                 ]}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="action"
-                title="BEGIN ADJUNCTIVE TREATMENTS"
+                title="INICIAR TRATAMENTOS ADJUVANTES"
                 items={[
-                  'Heparin (UFH or LMWH)',
-                  'Nitroglycerin',
-                  'Consider clopidogrel',
-                  'Consider GP IIb/IIIa inhibitor',
+                  'Heparina (HNF ou HBPM)',
+                  'Nitroglicerina',
+                  'Considerar clopidogrel',
+                  'Considerar inibidor GP IIb/IIIa',
                 ]}
               />
             </div>
 
             {/* Normal */}
             <div className="flowchart-branch-path">
-              <span className="flowchart-branch-label" style={{ color: '#4a8c5c', background: 'rgba(74, 140, 92, 0.1)' }}>NORMAL/NON-DIAGNOSTIC</span>
+              <span className="flowchart-branch-label" style={{ color: '#4a8c5c', background: 'rgba(74, 140, 92, 0.1)' }}>NORMAL/NÃO DIAGNÓSTICO</span>
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="info"
-                title="NORMAL OR NON-DIAGNOSTIC CHANGES"
+                title="ALTERAÇÕES NORMAIS OU NÃO DIAGNÓSTICAS"
                 items={[
-                  'Low-intermediate risk ACS',
+                  'SCA de baixo a intermediário risco',
                 ]}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="info"
-                title="ADMIT TO ED CHEST PAIN UNIT"
+                title="ADMITIR NA UNIDADE DE DOR TORÁCICA"
                 items={[
-                  'Cardiac marker numbers (troponin)',
-                  'Continuous ST-segment monitoring',
-                  'Repeat ECG monitor',
-                  'Noninvasive diagnostic test',
+                  'Marcadores cardíacos seriados (troponina)',
+                  'Monitorização contínua do segmento ST',
+                  'Repetir ECG',
+                  'Teste diagnóstico não invasivo',
                 ]}
               />
             </div>
@@ -175,22 +175,22 @@ export default function ACSPage() {
         {/* Sidebar */}
         <aside className="flowchart-sidebar">
           <DosePanel
-            title="Immediate ED Treatment"
+            title="Tratamento Imediato no PS"
             accentColor="#e94560"
             items={[
-              { label: 'Oxygen', detail: 'If O2 sat <94%, start at 4 L per minute, titrate' },
-              { label: 'Aspirin', detail: '160 to 325 mg PO (chew)' },
-              { label: 'Nitroglycerin', detail: 'Spray or sublingual' },
-              { label: 'Morphine', detail: 'IV if nitroglycerin not effective' },
+              { label: 'Oxigênio', detail: 'Se SatO2 <94%, iniciar a 4 L/min, titular' },
+              { label: 'AAS', detail: '160 a 325 mg VO (mastigar)' },
+              { label: 'Nitroglicerina', detail: 'Spray ou sublingual' },
+              { label: 'Morfina', detail: 'IV se nitroglicerina ineficaz' },
             ]}
           />
           <DosePanel
-            title="Reperfusion Targets"
+            title="Metas de Reperfusão"
             accentColor="#c0392b"
             items={[
-              { label: 'Fibrinolysis', detail: 'Door-to-needle goal < 30 minutes' },
-              { label: 'PCI', detail: 'Door-to-balloon inflation goal < 90 minutes' },
-              { label: 'First Medical Contact', detail: 'Note time of first medical contact and symptom onset' },
+              { label: 'Fibrinólise', detail: 'Meta porta-agulha < 30 minutos' },
+              { label: 'ICP', detail: 'Meta porta-balão < 90 minutos' },
+              { label: 'Primeiro Contato Médico', detail: 'Anotar horário do primeiro contato médico e início dos sintomas' },
             ]}
           />
         </aside>

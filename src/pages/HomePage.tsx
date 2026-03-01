@@ -14,27 +14,27 @@ export default function HomePage() {
         <div className="container hero-content">
           <div className="hero-heart animate-fade-in-up">❤️</div>
           <h1 className="hero-title animate-fade-in-up delay-1">
-            ACLS
-            <span className="hero-title-sub">Advanced Cardiac Life Support</span>
+            SAVA e ACLS
+            <span className="hero-title-sub">Manejo de Crises em Bloco Cirúrgico</span>
           </h1>
           <p className="hero-desc animate-fade-in-up delay-2">
-            Interactive algorithms and flowcharts for emergency cardiac care protocols.
-            Click on any algorithm below to explore the step-by-step workflow.
+            Algoritmos interativos e fluxogramas para protocolos de emergência cardíaca e anestésica.
+            Clique em qualquer algoritmo abaixo para explorar o fluxo passo a passo.
           </p>
           <div className="hero-stats animate-fade-in-up delay-3">
             <div className="hero-stat">
               <span className="hero-stat-num">12</span>
-              <span className="hero-stat-label">Algorithms</span>
+              <span className="hero-stat-label">Algoritmos</span>
             </div>
             <div className="hero-stat-divider" />
             <div className="hero-stat">
               <span className="hero-stat-num">2025</span>
-              <span className="hero-stat-label">AHA Guidelines</span>
+              <span className="hero-stat-label">Diretrizes AHA</span>
             </div>
             <div className="hero-stat-divider" />
             <div className="hero-stat">
               <span className="hero-stat-num">∞</span>
-              <span className="hero-stat-label">Interactive</span>
+              <span className="hero-stat-label">Interativo</span>
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@ export default function HomePage() {
         <div className="container">
           <h2 className="section-heading">
             <span className="section-heading-line" />
-            Choose an Algorithm
+            Escolha um Algoritmo
             <span className="section-heading-line" />
           </h2>
           <div className="algorithms-grid">
@@ -70,8 +70,8 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="home-footer">
         <div className="container">
-          <p>Based on the NHCPS ACLS Handbook — 2025 AHA Guidelines</p>
-          <p className="home-footer-sub">For educational purposes only. Not a substitute for professional training.</p>
+          <p>Baseado no Manual SAVA e ACLS Handbook — Diretrizes AHA 2025</p>
+          <p className="home-footer-sub">Apenas para fins educacionais. Não substitui treinamento profissional.</p>
         </div>
       </footer>
     </div>

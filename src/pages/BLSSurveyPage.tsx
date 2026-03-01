@@ -6,113 +6,113 @@ import './AlgoPage.css';
 export default function BLSSurveyPage() {
   return (
     <div className="algo-page">
-      <Navbar title="BLS Survey for Adults" showBack />
+      <Navbar title="SBV — Suporte Básico de Vida para Adultos" showBack />
 
       <header className="algo-page-header">
         <span className="algo-page-icon">🫁</span>
-        <h1 className="algo-page-title">BLS Survey for Adults</h1>
-        <span className="algo-page-case">ACLS Cases 5 — Basic Life Support</span>
+        <h1 className="algo-page-title">SBV — Suporte Básico de Vida para Adultos</h1>
+        <span className="algo-page-case">Caso 5 — Suporte Básico de Vida</span>
       </header>
 
       <div className="flowchart-layout">
         <div className="flowchart-main">
 
-          {/* Step 1: Check Responsiveness */}
+          {/* Passo 1: Verificar Responsividade */}
           <FlowchartNode
             type="action"
-            title="CHECK RESPONSIVENESS"
+            title="VERIFICAR RESPONSIVIDADE"
             stepNumber={1}
             items={[
-              'Shake and shout, "Are you okay?"',
-              'Check for breathing for no more than 10 seconds',
-              'If NOT breathing or insufficiently breathing, continue survey',
+              'Sacudir e chamar: "Você está bem?"',
+              'Verificar respiração por no máximo 10 segundos',
+              'Se NÃO respirar ou respiração insuficiente, continuar avaliação',
             ]}
           />
 
           <FlowchartArrow direction="right" />
 
-          {/* Step 2: Call EMS & Get AED */}
+          {/* Passo 2: Acionar SME e Obter DEA */}
           <FlowchartNode
             type="action"
-            title="CALL EMS & GET AED"
+            title="ACIONAR SME E OBTER DEA"
             stepNumber={2}
             items={[
-              'Send someone to call for emergency medical services (EMS)',
-              'Send someone to get an automated external defibrillator (AED)',
-              'If you are the ONLY provider, activate EMS and get AED',
+              'Enviar alguém para acionar o Serviço Médico de Emergência (SAMU 192)',
+              'Enviar alguém para buscar o desfibrilador externo automático (DEA)',
+              'Se você for o ÚNICO socorrista, acione o SME e busque o DEA',
             ]}
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* Step 3: Defibrillation */}
+          {/* Passo 3: Desfibrilação */}
           <FlowchartNode
             type="critical"
-            title="DEFIBRILLATION"
+            title="DESFIBRILAÇÃO"
             stepNumber={3}
             items={[
-              'If NO pulse, check for shockable rhythm with AED',
-              'If shockable rhythm, stand clear when delivering shocks',
-              'Provide CPR between shocks, starting with chest compressions',
+              'Se SEM pulso, verificar ritmo chocável com DEA',
+              'Se ritmo chocável, afastar-se ao aplicar o choque',
+              'Realizar RCP entre os choques, iniciando com compressões torácicas',
             ]}
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* Decision: Pulse check */}
+          {/* Decisão: Checar pulso */}
           <FlowchartNode
             type="decision"
-            title="PULSE CHECK"
-            items={['Check for a pulse for no more than 10 seconds']}
+            title="CHECAR PULSO"
+            items={['Verificar pulso por no máximo 10 segundos']}
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* Branch: Pulse vs No Pulse */}
+          {/* Ramo: Pulso vs Sem Pulso */}
           <div className="flowchart-branch">
-            {/* Pulse Present */}
+            {/* Pulso Presente */}
             <div className="flowchart-branch-path">
-              <span className="flowchart-branch-label flowchart-branch-label--yes">PULSE</span>
+              <span className="flowchart-branch-label flowchart-branch-label--yes">PULSO</span>
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="action"
-                title="START RESCUE BREATHING"
-                items={['Provide ventilations']}
+                title="INICIAR VENTILAÇÃO DE RESGATE"
+                items={['Fornecer ventilações']}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="action"
-                title="ONE BREATH EVERY 5 TO 6 SECONDS"
-                items={['or 10 to 12 breaths per min']}
+                title="1 VENTILAÇÃO A CADA 5 A 6 SEGUNDOS"
+                items={['ou 10 a 12 ventilações por minuto']}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="start"
-                title="CHECK PULSE EVERY 2 MIN"
-                items={['Reassess and continue as needed']}
+                title="CHECAR PULSO A CADA 2 MIN"
+                items={['Reavaliar e continuar conforme necessário']}
               />
             </div>
 
-            {/* No Pulse */}
+            {/* Sem Pulso */}
             <div className="flowchart-branch-path">
-              <span className="flowchart-branch-label flowchart-branch-label--no">NO PULSE</span>
+              <span className="flowchart-branch-label flowchart-branch-label--no">SEM PULSO</span>
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="critical"
-                title="START CPR"
-                items={['Begin chest compressions immediately']}
+                title="INICIAR RCP"
+                items={['Iniciar compressões torácicas imediatamente']}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="critical"
-                title="30 COMPRESSIONS PER 2 BREATHS"
-                items={['Depth of compression at least 2 inches']}
+                title="30 COMPRESSÕES PARA 2 VENTILAÇÕES"
+                items={['Profundidade de compressão de pelo menos 5 cm']}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="critical"
-                title="RATE OF 100–120 COMPRESSIONS PER MIN"
-                items={['Allow full chest recoil between compressions', 'Minimize interruptions']}
+                title="FREQUÊNCIA DE 100–120 COMPRESSÕES/MIN"
+                items={['Permitir retorno completo do tórax entre compressões', 'Minimizar interrupções']}
               />
             </div>
           </div>

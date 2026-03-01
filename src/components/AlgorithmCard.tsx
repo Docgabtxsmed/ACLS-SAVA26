@@ -23,7 +23,7 @@ export default function AlgorithmCard({ algorithm, index }: AlgorithmCardProps) 
       <div className="algo-card-header">
         <span className="algo-card-icon">{algorithm.icon}</span>
         {algorithm.caseNumber && (
-          <span className="algo-card-case">Case {algorithm.caseNumber}</span>
+          <span className="algo-card-case">Caso {algorithm.caseNumber}</span>
         )}
       </div>
       <h2 className="algo-card-title">{algorithm.title}</h2>
@@ -31,7 +31,7 @@ export default function AlgorithmCard({ algorithm, index }: AlgorithmCardProps) 
       <p className="algo-card-desc">{algorithm.description}</p>
       <div className="algo-card-footer">
         <span className="algo-card-cta">
-          View Algorithm
+          Ver Algoritmo
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="9 18 15 12 9 6" />
           </svg>

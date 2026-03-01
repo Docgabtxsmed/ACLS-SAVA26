@@ -13,96 +13,96 @@ export default function BradycardiaPage() {
 
   return (
     <div className="algo-page">
-      <Navbar title="Adult Bradycardia with Pulse" showBack />
+      <Navbar title="Bradicardia com Pulso no Adulto" showBack />
 
       <header className="algo-page-header">
         <span className="algo-page-icon">🐌</span>
-        <h1 className="algo-page-title">Adult Bradycardia with Pulse Algorithm</h1>
-        <span className="algo-page-case">ACLS Cases 7</span>
+        <h1 className="algo-page-title">Algoritmo de Bradicardia com Pulso no Adulto</h1>
+        <span className="algo-page-case">Caso 7</span>
       </header>
 
       <div className="flowchart-layout">
         <div className="flowchart-main">
 
-          {/* Step 1: Assess */}
+          {/* Passo 1: Avaliar */}
           <FlowchartNode
             type="action"
-            title="ASSESS SIGNS/SYMPTOMS"
+            title="AVALIAR SINAIS/SINTOMAS"
             items={[
-              'Heart rate typically <50 beats per minute if bradyarrhythmia',
+              'FC tipicamente <50 bpm se bradiarritmia',
             ]}
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* Step 2: Identify and Treat */}
+          {/* Passo 2: Identificar e Tratar */}
           <FlowchartNode
             type="critical"
-            title="IDENTIFY AND TREAT UNDERLYING CAUSE"
+            title="IDENTIFICAR E TRATAR CAUSA SUBJACENTE"
             items={[
-              'Maintain patent airway; assist breathing if necessary',
-              'If hypoxemic, administer oxygen',
-              'Cardiac monitor to identify rhythm',
-              'Monitor blood pressure and pulse oximetry',
-              'IV access',
-              'Assess 12-lead ECG',
-              'Consider possible hypoxic and toxicologic causes',
+              'Manter via aérea pérvia; auxiliar ventilação se necessário',
+              'Se hipoxêmico, administrar oxigênio',
+              'Monitor cardíaco para identificar ritmo',
+              'Monitorar PA e oximetria de pulso',
+              'Acesso IV',
+              'Obter ECG de 12 derivações',
+              'Considerar causas hipóxicas e toxicológicas',
             ]}
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* Step 3: Persistent Bradyarrhythmia? */}
+          {/* Passo 3: Bradiarritmia persistente? */}
           <FlowchartNode
             type="action"
-            title="PERSISTENT BRADYARRHYTHMIA CAUSING:"
+            title="BRADIARRITMIA PERSISTENTE CAUSANDO:"
             items={[
-              'Hypotension?',
-              'Acutely altered mental status?',
-              'Signs of shock?',
-              'Chest pain?',
-              'Acute heart failure?',
+              'Hipotensão?',
+              'Alteração aguda do nível de consciência?',
+              'Sinais de choque?',
+              'Dor torácica?',
+              'Insuficiência cardíaca aguda?',
             ]}
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* Decision Branch */}
+          {/* Ramo de Decisão */}
           <div className="flowchart-branch">
-            {/* YES → Treat */}
+            {/* SIM → Tratar */}
             <div className="flowchart-branch-path">
-              <span className="flowchart-branch-label flowchart-branch-label--yes">YES</span>
+              <span className="flowchart-branch-label flowchart-branch-label--yes">SIM</span>
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="critical"
-                title="ATROPINE"
+                title="ATROPINA"
                 items={[
-                  'See Doses/Details panel',
-                  'IF ATROPINE INEFFECTIVE:',
+                  'Ver painel de Doses/Detalhes',
+                  'SE ATROPINA INEFICAZ:',
                 ]}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="warning"
-                title="SECOND-LINE TREATMENTS"
+                title="TRATAMENTOS DE SEGUNDA LINHA"
                 items={[
-                  'Transcutaneous pacing',
-                  'OR Dopamine infusion: 5 to 20 mcg/kg per minute',
-                  'OR Epinephrine infusion: 2 to 10 mcg per minute',
+                  'Marca-passo transcutâneo',
+                  'OU Dopamina em infusão: 5 a 20 mcg/kg por minuto',
+                  'OU Epinefrina em infusão: 2 a 10 mcg por minuto',
                 ]}
               />
             </div>
 
-            {/* NO → Monitor */}
+            {/* NÃO → Monitorar */}
             <div className="flowchart-branch-path">
-              <span className="flowchart-branch-label flowchart-branch-label--no">NO</span>
+              <span className="flowchart-branch-label flowchart-branch-label--no">NÃO</span>
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="info"
-                title="MONITOR AND OBSERVE"
+                title="MONITORAR E OBSERVAR"
                 items={[
-                  'Continue monitoring',
-                  'Reassess as needed',
+                  'Manter monitorização',
+                  'Reavaliar conforme necessário',
                 ]}
               />
             </div>
@@ -113,19 +113,19 @@ export default function BradycardiaPage() {
         {/* Sidebar */}
         <aside className="flowchart-sidebar">
           <DosePanel
-            title="Ventilation/Oxygenation"
+            title="Ventilação/Oxigenação"
             accentColor="#4a8c5c"
             items={[
-              { label: 'Ventilation', detail: 'Avoid excessive ventilation. Start at 10 to 12 breaths/min and titrate to target ETCO2 of 35 to 40 mmHg' },
+              { label: 'Ventilação', detail: 'Evitar ventilação excessiva. Iniciar com 10 a 12 ventilações/min e titular para ETCO2 alvo de 35 a 40 mmHg' },
             ]}
           />
           <DosePanel
-            title="Doses/Details"
+            title="Doses/Detalhes"
             accentColor="#5b6abf"
             items={[
-              { label: 'Atropine IV Dose', detail: 'Initial dose of 1 mg bolus. Repeat every 3 to 5 minutes up to 3 mg max dose.' },
-              { label: 'Dopamine IV Infusion', detail: '5 to 20 mcg/kg per minute. Titrate to patient response; taper slowly.' },
-              { label: 'Epinephrine IV Infusion', detail: '2 to 10 mcg per minute.' },
+              { label: 'Atropina IV', detail: 'Dose inicial de 1 mg em bolus. Repetir a cada 3 a 5 minutos até dose máxima de 3 mg.' },
+              { label: 'Dopamina IV em infusão', detail: '5 a 20 mcg/kg por minuto. Titular conforme resposta do paciente; desmamar lentamente.' },
+              { label: 'Epinefrina IV em infusão', detail: '2 a 10 mcg por minuto.' },
             ]}
           />
         </aside>

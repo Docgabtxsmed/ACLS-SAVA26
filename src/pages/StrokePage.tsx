@@ -7,157 +7,157 @@ import './AlgoPage.css';
 export default function StrokePage() {
   return (
     <div className="algo-page">
-      <Navbar title="Acute Stroke Algorithm" showBack />
+      <Navbar title="AVC — Acidente Vascular Cerebral Agudo" showBack />
 
       <header className="algo-page-header">
         <span className="algo-page-icon">🧠</span>
-        <h1 className="algo-page-title">Acute Stroke Algorithm</h1>
-        <span className="algo-page-case">ACLS Cases 7</span>
+        <h1 className="algo-page-title">Algoritmo de AVC Agudo</h1>
+        <span className="algo-page-case">Caso 7</span>
       </header>
 
       <div className="flowchart-layout">
         <div className="flowchart-main">
 
-          {/* Start */}
+          {/* Início */}
           <FlowchartNode
             type="critical"
-            title="ACTIVATE EMERGENCY RESPONSE"
-            items={['Identify symptoms/signs of stroke']}
+            title="ATIVAR RESPOSTA DE EMERGÊNCIA"
+            items={['Identificar sinais/sintomas de AVC']}
           />
 
           <FlowchartArrow direction="down" />
 
-          {/* EMS Assessment */}
+          {/* Avaliação SME */}
           <div className="flowchart-node-wrapper">
-            <span className="flowchart-time-label">NINDS TIME GOALS</span>
+            <span className="flowchart-time-label">METAS DE TEMPO NINDS</span>
             <FlowchartNode
               type="action"
-              title="IMPORTANT EMS ASSESSMENT/ACTIONS"
+              title="AVALIAÇÃO/AÇÕES IMPORTANTES DO SME"
               items={[
-                'Complete prehospital stroke assessment',
-                'Note time of symptom onset (last normal)',
-                'Support ABCs; give O2',
-                'Check glucose',
-                'Triage to stroke center',
-                'Alert hospital',
+                'Completar avaliação pré-hospitalar de AVC',
+                'Anotar horário de início dos sintomas (último estado normal)',
+                'Suporte ABC; administrar O2',
+                'Verificar glicemia',
+                'Encaminhar para centro de AVC',
+                'Alertar hospital',
               ]}
             />
           </div>
 
           <FlowchartArrow direction="down" />
 
-          {/* General Assessment */}
+          {/* Avaliação Geral */}
           <div className="flowchart-node-wrapper">
-            <span className="flowchart-time-label">ED ARRIVAL WITHIN 10 MINUTES OR LESS</span>
+            <span className="flowchart-time-label">CHEGADA AO PS EM ATÉ 10 MINUTOS</span>
             <FlowchartNode
               type="action"
-              title="GENERAL ASSESSMENT/STABILIZATION"
+              title="AVALIAÇÃO GERAL/ESTABILIZAÇÃO"
               items={[
-                'Evaluate vital signs/ABCs',
-                'Attain IV access/perform lab assessments',
-                'Attain 12-lead ECG',
-                'Give O2 if hypoxemic',
-                'Check glucose; treat if needed',
-                'Complete neurologic screening assessment',
-                'Order MRI of brain/emergency CT scan',
-                'Activate stroke team',
+                'Avaliar sinais vitais/ABC',
+                'Obter acesso IV/realizar exames laboratoriais',
+                'Obter ECG de 12 derivações',
+                'Administrar O2 se hipoxêmico',
+                'Verificar glicemia; tratar se necessário',
+                'Completar avaliação neurológica de triagem',
+                'Solicitar RM de crânio/TC de emergência',
+                'Ativar equipe de AVC',
               ]}
             />
           </div>
 
           <FlowchartArrow direction="down" />
 
-          {/* Neuro Assessment */}
+          {/* Avaliação Neurológica */}
           <div className="flowchart-node-wrapper">
-            <span className="flowchart-time-label">ED ARRIVAL WITHIN 25 MINUTES OR LESS</span>
+            <span className="flowchart-time-label">CHEGADA AO PS EM ATÉ 25 MINUTOS</span>
             <FlowchartNode
               type="action"
-              title="NEUROLOGIC ASSESSMENT BY STROKE TEAM"
+              title="AVALIAÇÃO NEUROLÓGICA PELA EQUIPE DE AVC"
               items={[
-                'Go over patient history',
-                'Complete neurologic examination (CPSS or NIH Stroke Scale)',
-                'Note last known normal or symptom onset time',
+                'Revisar história do paciente',
+                'Completar exame neurológico (CPSS ou Escala NIHSS)',
+                'Anotar último estado normal conhecido ou início dos sintomas',
               ]}
             />
           </div>
 
           <FlowchartArrow direction="down" />
 
-          {/* CT Decision */}
+          {/* Decisão TC */}
           <div className="flowchart-node-wrapper">
-            <span className="flowchart-time-label">ED ARRIVAL WITHIN 45 MINUTES OR LESS</span>
+            <span className="flowchart-time-label">CHEGADA AO PS EM ATÉ 45 MINUTOS</span>
             <FlowchartNode
               type="decision"
-              title="CT SCAN DISPLAYS HEMORRHAGE?"
+              title="TC MOSTRA HEMORRAGIA?"
             />
           </div>
 
           <FlowchartArrow direction="down" />
 
-          {/* Branch: Hemorrhagic vs Ischemic */}
+          {/* Ramo: Hemorrágico vs Isquêmico */}
           <div className="flowchart-branch">
 
-            {/* YES → Hemorrhagic */}
+            {/* SIM → Hemorrágico */}
             <div className="flowchart-branch-path">
-              <span className="flowchart-branch-label flowchart-branch-label--yes">YES — HEMORRHAGIC</span>
+              <span className="flowchart-branch-label flowchart-branch-label--yes">SIM — HEMORRÁGICO</span>
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="critical"
-                title="SEE NEUROSURGEON/NEUROLOGIST"
-                items={['Transfer if not available']}
+                title="AVALIAÇÃO NEUROCIRURGIÃO/NEUROLOGISTA"
+                items={['Transferir se não disponível']}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="info"
-                title="GIVE ASPIRIN"
-                items={['Manage hemorrhagic stroke per protocol']}
+                title="ADMINISTRAR AAS"
+                items={['Manejar AVC hemorrágico conforme protocolo']}
               />
             </div>
 
-            {/* NO → Ischemic */}
+            {/* NÃO → Isquêmico */}
             <div className="flowchart-branch-path">
-              <span className="flowchart-branch-label flowchart-branch-label--no">NO — ISCHEMIC</span>
+              <span className="flowchart-branch-label flowchart-branch-label--no">NÃO — ISQUÊMICO</span>
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="action"
-                title="ACUTE ISCHEMIC STROKE LIKELY"
+                title="PROVÁVEL AVC ISQUÊMICO AGUDO"
                 items={[
-                  'Prepare for fibrinolytic therapy',
-                  'Repeat neurologic exam; deficits improving to normal?',
-                  'Search for fibrinolytic exclusions',
+                  'Preparar para terapia fibrinolítica',
+                  'Repetir exame neurológico; déficits melhorando?',
+                  'Pesquisar exclusões para fibrinólise',
                 ]}
               />
               <FlowchartArrow direction="down" />
               <FlowchartNode
                 type="decision"
-                title="FIBRINOLYTIC THERAPY STILL POSSIBLE?"
+                title="TERAPIA FIBRINOLÍTICA AINDA POSSÍVEL?"
               />
               <FlowchartArrow direction="down" />
 
               <div className="flowchart-branch">
                 <div className="flowchart-branch-path">
-                  <span className="flowchart-branch-label flowchart-branch-label--yes">CANDIDATE</span>
+                  <span className="flowchart-branch-label flowchart-branch-label--yes">CANDIDATO</span>
                   <FlowchartArrow direction="down" />
                   <FlowchartNode
                     type="critical"
-                    title="ADMINISTER rtPA (ALTEPLASE)"
+                    title="ADMINISTRAR rtPA (ALTEPLASE)"
                     items={[
-                      'Begin fibrinolytic therapy per protocol',
-                      'Monitor for complications',
-                      'Admit to stroke unit/ICU',
+                      'Iniciar terapia fibrinolítica conforme protocolo',
+                      'Monitorar complicações',
+                      'Admitir em unidade de AVC/UTI',
                     ]}
                   />
                 </div>
                 <div className="flowchart-branch-path">
-                  <span className="flowchart-branch-label flowchart-branch-label--no">NON-CANDIDATE</span>
+                  <span className="flowchart-branch-label flowchart-branch-label--no">NÃO CANDIDATO</span>
                   <FlowchartArrow direction="down" />
                   <FlowchartNode
                     type="info"
-                    title="GIVE ASPIRIN"
+                    title="ADMINISTRAR AAS"
                     items={[
-                      'Consider thrombectomy if LVO',
-                      'Admit to stroke unit',
-                      'Continue supportive care',
+                      'Considerar trombectomia se oclusão de grande vaso',
+                      'Admitir em unidade de AVC',
+                      'Manter cuidados de suporte',
                     ]}
                   />
                 </div>
@@ -170,23 +170,23 @@ export default function StrokePage() {
         {/* Sidebar */}
         <aside className="flowchart-sidebar">
           <DosePanel
-            title="NINDS Time Goals"
+            title="Metas de Tempo NINDS"
             accentColor="#8e44ad"
             items={[
-              { label: 'Door-to-physician', detail: '10 minutes' },
-              { label: 'Door-to-CT completion', detail: '25 minutes' },
-              { label: 'Door-to-CT read', detail: '45 minutes' },
-              { label: 'Door-to-drug (rtPA)', detail: '60 minutes' },
-              { label: 'Door-to-monitored bed', detail: '3 hours' },
+              { label: 'Porta-médico', detail: '10 minutos' },
+              { label: 'Porta-TC concluída', detail: '25 minutos' },
+              { label: 'Porta-laudo da TC', detail: '45 minutos' },
+              { label: 'Porta-droga (rtPA)', detail: '60 minutos' },
+              { label: 'Porta-leito monitorado', detail: '3 horas' },
             ]}
           />
           <DosePanel
-            title="Stroke Assessment Scales"
+            title="Escalas de Avaliação de AVC"
             accentColor="#5b6abf"
             items={[
-              { label: 'CPSS (Cincinnati)', detail: 'Facial Droop, Arm Drift, Speech' },
-              { label: 'NIH Stroke Scale', detail: 'Quantifies stroke severity (0-42)' },
-              { label: 'Key: Last Known Normal', detail: 'Critical for fibrinolytic eligibility window' },
+              { label: 'CPSS (Cincinnati)', detail: 'Desvio facial, Queda do braço, Fala' },
+              { label: 'Escala NIHSS', detail: 'Quantifica gravidade do AVC (0-42)' },
+              { label: 'Chave: Último Estado Normal', detail: 'Crítico para janela de elegibilidade fibrinolítica' },
             ]}
           />
         </aside>
