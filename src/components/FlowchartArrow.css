@@ -1,0 +1,116 @@
+/* =========================================
+   FlowchartArrow Styles
+   ========================================= */
+
+.flow-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Down arrow */
+.flow-arrow--down {
+  flex-direction: column;
+  padding: var(--space-xs) 0;
+  width: 40px;
+  margin: 0 auto;
+}
+
+.flow-arrow--down .flow-arrow-line {
+  width: 3px;
+  height: 24px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
+  border-radius: 2px;
+}
+
+.flow-arrow--down .flow-arrow-head {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Right arrow */
+.flow-arrow--right {
+  flex-direction: row;
+  padding: 0 var(--space-xs);
+  height: 40px;
+}
+
+.flow-arrow--right .flow-arrow-line {
+  height: 3px;
+  width: 24px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
+  border-radius: 2px;
+}
+
+.flow-arrow--right .flow-arrow-head {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 10px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Left arrow */
+.flow-arrow--left {
+  flex-direction: row-reverse;
+  padding: 0 var(--space-xs);
+  height: 40px;
+}
+
+.flow-arrow--left .flow-arrow-line {
+  height: 3px;
+  width: 24px;
+  background: linear-gradient(270deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
+  border-radius: 2px;
+}
+
+.flow-arrow--left .flow-arrow-head {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 10px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Label */
+.flow-arrow-label {
+  position: absolute;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-dark);
+  padding: 1px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.flow-arrow--down .flow-arrow-label {
+  left: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.flow-arrow--right .flow-arrow-label,
+.flow-arrow--left .flow-arrow-label {
+  top: calc(100% + 2px);
+}
+
+/* Split indicator */
+.flow-arrow--split {
+  width: 60%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: var(--space-xs) auto;
+  border-radius: 2px;
+}
+
+.flow-arrow--split .flow-arrow-line,
+.flow-arrow--split .flow-arrow-head {
+  display: none;
+}

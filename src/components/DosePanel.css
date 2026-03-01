@@ -1,0 +1,51 @@
+.dose-panel {
+  --dose-accent: var(--node-info);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid var(--dose-accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  max-width: 380px;
+  width: 100%;
+}
+
+.dose-panel-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dose-panel-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.dose-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dose-item-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.dose-item-detail {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .dose-panel {
+    max-width: 100%;
+  }
+}

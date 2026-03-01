@@ -1,0 +1,317 @@
+/* =========================================
+   Content Page — Tabbed Layout for SAVA Topics
+   ========================================= */
+
+/* --- Tabs --- */
+.content-tabs {
+  display: flex;
+  gap: var(--space-xs);
+  justify-content: center;
+  padding: 0 var(--space-lg);
+  margin: var(--space-xl) auto var(--space-md);
+  max-width: 900px;
+  flex-wrap: wrap;
+}
+
+.content-tab {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.content-tab:hover {
+  color: var(--color-text-secondary);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.content-tab--active {
+  color: #fff;
+  background: var(--tab-accent, var(--color-accent));
+  border-color: var(--tab-accent, var(--color-accent));
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--tab-accent, var(--color-accent)) 30%, transparent);
+}
+
+/* --- Content Area --- */
+.content-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+  animation: fadeInUp 0.4s ease both;
+}
+
+/* --- Section Card --- */
+.content-section {
+  background: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+  transition: border-color var(--transition-base);
+}
+
+.content-section:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.content-section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.content-section-icon {
+  font-size: 1.8rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.content-section-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.content-section-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+/* --- Item Lists --- */
+.content-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.content-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--item-accent, var(--color-accent));
+}
+
+.content-list-item-bullet {
+  color: var(--item-accent, var(--color-accent));
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* --- Highlight Card / Alert --- */
+.content-alert {
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.content-alert--warning {
+  background: rgba(230, 126, 34, 0.1);
+  border: 1px solid rgba(230, 126, 34, 0.3);
+}
+
+.content-alert--danger {
+  background: rgba(233, 69, 96, 0.1);
+  border: 1px solid rgba(233, 69, 96, 0.3);
+}
+
+.content-alert--info {
+  background: rgba(21, 101, 192, 0.1);
+  border: 1px solid rgba(21, 101, 192, 0.3);
+}
+
+.content-alert--success {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.content-alert-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.content-alert-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.content-alert-title {
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+/* --- Table --- */
+.content-table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.content-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.content-table th {
+  background: rgba(255, 255, 255, 0.06);
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+}
+
+.content-table td {
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-text-secondary);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  line-height: 1.5;
+}
+
+.content-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* --- Comparison Cards (Pediatria vs Adulto) --- */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+.comparison-card {
+  background: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.comparison-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--comp-color, var(--color-accent));
+}
+
+.comparison-card:hover {
+  border-color: var(--comp-color, var(--color-accent));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.comparison-card-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.comparison-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-xs) 0;
+  font-size: var(--font-size-xs);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.comparison-card-row:last-child {
+  border-bottom: none;
+}
+
+.comparison-card-label {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.comparison-card-value {
+  color: var(--comp-color, var(--color-accent));
+  font-weight: 700;
+}
+
+/* --- Dose highlight within content --- */
+.content-dose-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(233, 69, 96, 0.15);
+  color: #ff6b6b;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: var(--font-size-xs);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .content-tabs {
+    gap: var(--space-xs);
+    padding: 0 var(--space-sm);
+  }
+
+  .content-tab {
+    padding: var(--space-xs) var(--space-md);
+    font-size: var(--font-size-xs);
+  }
+
+  .content-body {
+    padding: var(--space-md);
+  }
+
+  .content-section {
+    padding: var(--space-lg);
+  }
+
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-section-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.4rem;
+  }
+
+  .content-section-title {
+    font-size: var(--font-size-lg);
+  }
+}

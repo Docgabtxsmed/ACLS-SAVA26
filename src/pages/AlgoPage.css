@@ -1,0 +1,177 @@
+/* =========================================
+   Algorithm Page Shared Layout
+   ========================================= */
+
+.algo-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.algo-page-header {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg) var(--space-lg);
+  position: relative;
+}
+
+.algo-page-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+}
+
+.algo-page-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+
+.algo-page-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-accent);
+  font-style: italic;
+  margin-bottom: var(--space-xs);
+}
+
+.algo-page-case {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-text-muted);
+}
+
+/* Flowchart Layout */
+.flowchart-layout {
+  display: flex;
+  gap: var(--space-2xl);
+  padding: var(--space-2xl) var(--space-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.flowchart-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.flowchart-sidebar {
+  width: 340px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  position: sticky;
+  top: 80px;
+  align-self: flex-start;
+}
+
+/* Branch split */
+.flowchart-branch {
+  display: flex;
+  gap: var(--space-xl);
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.flowchart-branch-path {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+  max-width: 400px;
+}
+
+.flowchart-branch-label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.flowchart-branch-label--yes {
+  color: #4caf50;
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.flowchart-branch-label--no {
+  color: #f44336;
+  background: rgba(244, 67, 54, 0.1);
+}
+
+/* time label (for stroke) */
+.flowchart-time-label {
+  position: absolute;
+  left: -160px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-accent);
+  text-align: right;
+  width: 140px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+}
+
+.flowchart-node-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .flowchart-layout {
+    flex-direction: column;
+    padding: var(--space-lg);
+  }
+  .flowchart-sidebar {
+    width: 100%;
+    position: static;
+    order: -1;
+  }
+  .flowchart-branch {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+  .flowchart-branch-path {
+    max-width: 100%;
+    width: 100%;
+  }
+  .flowchart-time-label {
+    position: static;
+    transform: none;
+    width: auto;
+    text-align: center;
+    margin-bottom: var(--space-xs);
+  }
+}
+
+@media (max-width: 600px) {
+  .algo-page-title {
+    font-size: var(--font-size-xl);
+  }
+  .algo-page-icon {
+    font-size: 2.2rem;
+  }
+}

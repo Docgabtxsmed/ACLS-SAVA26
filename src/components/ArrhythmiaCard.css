@@ -1,0 +1,665 @@
+/* =========================================
+   ArrhythmiaCard & ArrhythmiaModal Styles
+   ========================================= */
+
+/* ── Card ── */
+.arrhy-card {
+  position: relative;
+  background: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-xs);
+}
+
+.arrhy-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--arrhy-accent);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 30px color-mix(in srgb, var(--arrhy-accent) 20%, transparent);
+}
+
+.arrhy-card:focus-visible {
+  outline: 2px solid var(--arrhy-accent);
+  outline-offset: 2px;
+}
+
+.arrhy-card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--arrhy-accent), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.arrhy-card:hover .arrhy-card-glow {
+  opacity: 1;
+}
+
+.arrhy-card-icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-xs);
+  line-height: 1;
+}
+
+.arrhy-card-name {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.arrhy-card-abbr {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--arrhy-accent);
+  letter-spacing: 1px;
+}
+
+.arrhy-card-category {
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-top: 2px;
+}
+
+.arrhy-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--arrhy-accent);
+  margin-top: var(--space-sm);
+  transition: gap var(--transition-fast);
+}
+
+.arrhy-card:hover .arrhy-card-cta {
+  gap: var(--space-sm);
+}
+
+/* ── Modal Backdrop ── */
+.arrhythmia-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-lg);
+  animation: modalBackdropIn 0.25s ease both;
+}
+
+@keyframes modalBackdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Modal ── */
+.arrhythmia-modal {
+  position: relative;
+  background: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), 0 0 60px color-mix(in srgb, var(--modal-accent) 15%, transparent);
+  animation: modalScaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes modalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* modal scrollbar */
+.arrhythmia-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.arrhythmia-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.arrhythmia-modal::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+/* ── Modal Header ── */
+.arrhythmia-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xl);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: sticky;
+  top: 0;
+  background: var(--color-bg-card);
+  z-index: 2;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.arrhythmia-modal-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.arrhythmia-modal-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.arrhythmia-modal-title {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.arrhythmia-modal-abbr {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--modal-accent);
+  letter-spacing: 1px;
+  margin-top: 2px;
+  display: block;
+}
+
+.arrhythmia-modal-close {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-muted);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.arrhythmia-modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+  transform: rotate(90deg);
+}
+
+/* ── Modal Body ── */
+.arrhythmia-modal-body {
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.arrhythmia-modal-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ── ECG Image in Modal ── */
+.arrhythmia-modal-ecg {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.arrhythmia-modal-ecg-label {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--modal-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: var(--space-sm) var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.arrhythmia-modal-ecg-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #fff;
+  padding: var(--space-sm);
+}
+
+/* ── Section Title Separator ── */
+.section-separator {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg) var(--space-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.section-separator h2 {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+.section-separator h2::before,
+.section-separator h2::after {
+  content: '';
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(233, 69, 96, 0.5));
+}
+
+.section-separator h2::after {
+  background: linear-gradient(90deg, rgba(233, 69, 96, 0.5), transparent);
+}
+
+/* ── Sections ── */
+.arrhythmia-modal-section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+}
+
+.arrhythmia-modal-section--treatment {
+  background: rgba(233, 69, 96, 0.04);
+  border-color: rgba(233, 69, 96, 0.1);
+}
+
+.arrhythmia-modal-section-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--modal-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.arrhythmia-modal-section-icon {
+  font-size: 1.1rem;
+}
+
+.arrhythmia-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.arrhythmia-modal-list li {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  padding-left: var(--space-md);
+  position: relative;
+}
+
+.arrhythmia-modal-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--modal-accent);
+  font-weight: 700;
+}
+
+.arrhythmia-modal-list--treatment li::before {
+  content: '→';
+  color: var(--color-accent);
+}
+
+/* ── Arrhythmia Cards Grid (in TachycardiaPage) ── */
+.arrhy-cards-section {
+  padding: var(--space-2xl) var(--space-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.arrhy-cards-section-title {
+  text-align: center;
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+.arrhy-cards-section-line {
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(233, 69, 96, 0.5));
+}
+
+.arrhy-cards-section-line:last-child {
+  background: linear-gradient(90deg, rgba(233, 69, 96, 0.5), transparent);
+}
+
+.arrhy-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-md);
+}
+
+/* ── Classification Tree styles ── */
+.classification-tree {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-md);
+}
+
+.tree-root {
+  background: linear-gradient(135deg, #2c3e50, #1a252f);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  padding: var(--space-md) var(--space-2xl);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+/* connector lines */
+.tree-connector {
+  width: 2px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.tree-h-connector {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+}
+
+.tree-h-connector::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* QRS branches */
+.tree-qrs-branches {
+  display: flex;
+  gap: var(--space-2xl);
+  width: 100%;
+  justify-content: center;
+}
+
+.tree-qrs-branch {
+  flex: 1;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.tree-qrs-node {
+  background: linear-gradient(135deg, var(--node-decision), var(--node-decision-dark));
+  color: #fff;
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  width: fit-content;
+}
+
+.tree-rr-node {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text-secondary);
+  padding: var(--space-xs) var(--space-lg);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* RR sub-branches */
+.tree-rr-branches {
+  display: flex;
+  gap: var(--space-lg);
+  width: 100%;
+  justify-content: center;
+}
+
+.tree-rr-branch {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.tree-rr-label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 14px;
+  border-radius: var(--radius-sm);
+}
+
+.tree-rr-label--regular {
+  color: #4caf50;
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.tree-rr-label--irregular {
+  color: #ff7043;
+  background: rgba(255, 112, 67, 0.1);
+  border: 1px solid rgba(255, 112, 67, 0.2);
+}
+
+.tree-rr-label--regular-mono {
+  color: #4caf50;
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.tree-rr-label--irregular-poly {
+  color: #ab47bc;
+  background: rgba(171, 71, 188, 0.1);
+  border: 1px solid rgba(171, 71, 188, 0.2);
+}
+
+/* terminal list */
+.tree-terminal {
+  background: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  width: 100%;
+  min-width: 0;
+}
+
+.tree-terminal-item {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  padding: 6px var(--space-sm);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  line-height: 1.4;
+}
+
+.tree-terminal-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-primary);
+  padding-left: var(--space-md);
+}
+
+.tree-terminal-item--sub {
+  padding-left: var(--space-xl);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+.tree-terminal-item--sub:hover {
+  padding-left: calc(var(--space-xl) + var(--space-xs));
+}
+
+/* Legend */
+.tree-legend {
+  margin-top: var(--space-2xl);
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  max-width: 700px;
+  width: 100%;
+}
+
+.tree-legend-title {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.tree-legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-xl);
+}
+
+.tree-legend-item {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.tree-legend-item strong {
+  color: var(--color-accent);
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .tree-qrs-branches {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+
+  .tree-qrs-branch {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .tree-h-connector::before {
+    display: none;
+  }
+
+  .arrhy-cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .tree-rr-branches {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .tree-rr-branch {
+    width: 100%;
+  }
+
+  .arrhythmia-modal {
+    max-width: 100%;
+    max-height: 95vh;
+    border-radius: var(--radius-lg);
+  }
+
+  .arrhythmia-modal-header {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .arrhythmia-modal-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .arrhythmia-modal-icon {
+    font-size: 2rem;
+  }
+
+  .arrhy-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .arrhy-card {
+    padding: var(--space-md);
+  }
+
+  .arrhy-card-name {
+    font-size: var(--font-size-xs);
+  }
+}

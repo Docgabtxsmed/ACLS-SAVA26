@@ -1,0 +1,206 @@
+/* =========================================
+   Home Page Styles
+   ========================================= */
+
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Hero --- */
+.hero {
+  position: relative;
+  padding: var(--space-3xl) 0;
+  overflow: hidden;
+}
+
+.hero-bg-pattern {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 30% 20%, rgba(233, 69, 96, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(91, 106, 191, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.hero-heart {
+  font-size: 4rem;
+  animation: heartbeat 1.5s infinite;
+  filter: drop-shadow(0 0 20px rgba(233, 69, 96, 0.5));
+}
+
+.hero-title {
+  font-size: var(--font-size-hero);
+  font-weight: 900;
+  letter-spacing: 6px;
+  background: linear-gradient(135deg, #ffffff 0%, #e94560 50%, #ff6b6b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.hero-title-sub {
+  font-size: var(--font-size-lg);
+  font-weight: 400;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--color-text-secondary), var(--color-text-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+}
+
+.hero-desc {
+  max-width: 560px;
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  margin-top: var(--space-md);
+  padding: var(--space-lg) var(--space-2xl);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(10px);
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.hero-stat-num {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-accent);
+}
+
+.hero-stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.hero-stat-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* --- Algorithms Section --- */
+.algorithms-section {
+  padding: var(--space-xl) 0 var(--space-3xl);
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.section-heading-line {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(233, 69, 96, 0.5));
+}
+
+.section-heading-line:last-child {
+  background: linear-gradient(90deg, rgba(233, 69, 96, 0.5), transparent);
+}
+
+.algorithms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--space-xl);
+}
+
+/* --- Footer --- */
+.home-footer {
+  margin-top: auto;
+  padding: var(--space-2xl) 0;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.home-footer p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.home-footer-sub {
+  margin-top: var(--space-xs);
+  font-size: var(--font-size-xs) !important;
+  opacity: 0.6;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--space-2xl) 0;
+  }
+  .hero-heart {
+    font-size: 3rem;
+  }
+  .hero-title {
+    font-size: var(--font-size-4xl);
+    letter-spacing: 4px;
+  }
+  .hero-title-sub {
+    font-size: var(--font-size-sm);
+  }
+  .hero-stats {
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+  }
+  .hero-stat-num {
+    font-size: var(--font-size-xl);
+  }
+  .algorithms-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  .section-heading {
+    font-size: var(--font-size-md);
+    letter-spacing: 2px;
+  }
+  .section-heading-line {
+    width: 30px;
+  }
+}
+
+@media (max-width: 450px) {
+  .hero-title {
+    font-size: var(--font-size-3xl);
+  }
+}
