@@ -12,6 +12,7 @@ build/
 
 # Backend
 backend/.venv/
+backend/venv/
 backend/chroma_db/
 backend/data/pdfs/
 backend/__pycache__/
