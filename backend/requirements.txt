@@ -1,0 +1,22 @@
+# FastAPI
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+
+# LangChain
+langchain==0.3.14
+langchain-openai==0.3.0
+langchain-community==0.3.14
+langchain-chroma==0.2.2
+
+# PDF Processing
+pypdf==5.1.0
+
+# Vector Store
+chromadb==0.6.3
+
+# Environment
+python-dotenv==1.0.1
+
+# SSE for streaming
+sse-starlette==2.2.1
