@@ -188,7 +188,7 @@ async def ask(question: str) -> str:
     """Faz uma pergunta e retorna a resposta completa (nao streaming)."""
     chain = build_rag_chain()
     # ainvoke = versao assincrona de invoke (o "a" no inicio = async)
-    return await chain.ainvoke(question)
+    return await chain.ainvoke({"question": question})
 
 
 # CONCEITO: AsyncIterator e yield
@@ -203,7 +203,7 @@ async def ask_stream(question: str) -> AsyncIterator[str]:
     chain = build_rag_chain()
     # astream = versao assincrona de stream
     # async for = loop que espera cada token chegar
-    async for chunk in chain.astream(question):
+    async for chunk in chain.astream({"question": question}):
         yield chunk
 
 

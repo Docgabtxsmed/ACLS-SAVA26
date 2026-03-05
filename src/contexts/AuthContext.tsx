@@ -58,7 +58,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw error
     }
 
-    setUser(data.user)
+    if (data.session) {
+      setUser(data.user)
+    } else {
+      throw new Error('Por favor, confirme seu email antes de continuar. Verifique sua caixa de entrada.')
+    }
   }
 
   const signOut = async () => {

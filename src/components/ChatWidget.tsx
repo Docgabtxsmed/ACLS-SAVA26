@@ -358,13 +358,18 @@ export default function ChatWidget() {
     try {
       // Obter o token de acesso da sessão do Supabase
       const { data: { session } } = await supabase.auth.getSession();
-      const accessToken = session?.access_token;
+      let accessToken = session?.access_token;
 
       if (!accessToken) {
-        setError('Sessão expirada. Faça login novamente.');
-        isLoadingRef.current = false;
-        setIsLoading(false);
-        return;
+        const { data: refreshed } = await supabase.auth.refreshSession();
+        if (refreshed.session?.access_token) {
+          accessToken = refreshed.session.access_token;
+        } else {
+          setError('Sessão expirada. Faça login novamente.');
+          isLoadingRef.current = false;
+          setIsLoading(false);
+          return;
+        }
       }
 
       const response = await fetch(`${API_URL}/api/chat/stream`, {
