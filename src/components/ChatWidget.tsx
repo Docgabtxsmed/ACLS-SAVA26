@@ -8,6 +8,13 @@ import './ChatWidget.css';
 // URL da API (usa variável de ambiente em produção, fallback para localhost em desenvolvimento)
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
+// Prompts sugeridos exibidos na tela de boas-vindas
+const SUGGESTED_PROMPTS = [
+  'Qual a dose da Adrenalina na PCR em Pediatria?',
+  'Qual o passo a passo para o manejo da anafilaxia?',
+  'Qual o passo a passo para o manejo da PCR com ritmo chocável? (FV/TV) de acordo com o ACLS?',
+];
+
 // Tipos para mensagens locais (UI)
 type Message = {
   role: 'user' | 'assistant';
@@ -129,8 +136,11 @@ export default function ChatWidget() {
   const [isLoadingConversations, setIsLoadingConversations] = useState<boolean>(false);
   const [saveWarning, setSaveWarning] = useState<string | null>(null);
 
+  const [attachInfo, setAttachInfo] = useState<boolean>(false);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const isLoadingRef = useRef<boolean>(false);
 
@@ -301,18 +311,27 @@ export default function ChatWidget() {
     }
   };
 
-  const handleSendMessage = async () => {
-    if (!input.trim() || isLoadingRef.current) return;
+  const handlePromptSelect = (prompt: string) => {
+    handleSendMessage(prompt);
+  };
+
+  const handleAttach = () => {
+    setAttachInfo(true);
+    setTimeout(() => setAttachInfo(false), 3000);
+  };
+
+  const handleSendMessage = async (textOverride?: string) => {
+    const messageContent = textOverride !== undefined ? textOverride : input.trim();
+    if (!messageContent || isLoadingRef.current) return;
 
     const userMessage: Message = {
       role: 'user',
-      content: input.trim(),
+      content: messageContent,
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    const messageContent = input.trim();
-    setInput('');
+    if (textOverride === undefined) setInput('');
     setError(null);
     isLoadingRef.current = true;
     setIsLoading(true);
@@ -560,7 +579,7 @@ export default function ChatWidget() {
 
           {/* Header */}
           <div className="chat-widget-header">
-            <h3 className="chat-widget-title">Assistente IA</h3>
+            <h3 className="chat-widget-title">Loki</h3>
             <div className="chat-widget-header-actions">
               <button
                 className="chat-widget-conversations-button"
@@ -645,8 +664,31 @@ export default function ChatWidget() {
             ) : (
               <>
                 {messages.length === 0 && !isLoading && !error && (
-                  <div className="chat-widget-empty">
-                    <p>Olá! Como posso ajudar você hoje?</p>
+                  <div className="chat-widget-welcome">
+                    <div className="chat-widget-welcome-avatar">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        <circle cx="12" cy="16" r="1" fill="currentColor" stroke="none" />
+                        <line x1="8" y1="16" x2="8" y2="16" strokeWidth="2.5" />
+                        <line x1="16" y1="16" x2="16" y2="16" strokeWidth="2.5" />
+                      </svg>
+                    </div>
+                    <p className="chat-widget-welcome-message">
+                      Oi, sou o Loki, assistente de IA da MedTech especialista em cenários de crise nas emergências e no Centro Cirúrgico. Estou aqui para te ajudar caso precise de alguma resposta rápida.
+                    </p>
+                    <div className="chat-widget-prompts">
+                      {SUGGESTED_PROMPTS.map((prompt, idx) => (
+                        <button
+                          key={idx}
+                          className="chat-widget-prompt-card"
+                          onClick={() => handlePromptSelect(prompt)}
+                          disabled={isLoading}
+                        >
+                          {prompt}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 )}
 
@@ -741,9 +783,51 @@ export default function ChatWidget() {
             )}
           </div>
 
+          {/* Barra de ações do rodapé */}
+          {isAuthenticated && messages.length > 0 && (
+            <div className="chat-widget-footer-bar">
+              <button
+                className="chat-widget-history-link"
+                onClick={() => setShowSidebar(true)}
+              >
+                Histórico de conversas
+              </button>
+              <button
+                className="chat-widget-clear-btn"
+                onClick={handleNewConversation}
+              >
+                Limpar conversa
+              </button>
+            </div>
+          )}
+
           {/* Input */}
           {isAuthenticated && (
           <div className="chat-widget-input-container">
+            {/* Input oculto para seleção de arquivo */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*,.pdf"
+              style={{ display: 'none' }}
+              onChange={handleAttach}
+            />
+            <button
+              className="chat-widget-attach"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isLoading}
+              aria-label="Anexar arquivo"
+              title="Anexar imagem"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+              </svg>
+            </button>
+            {attachInfo && (
+              <div className="chat-widget-attach-info">
+                Em breve — suporte a imagens em desenvolvimento
+              </div>
+            )}
             <textarea
               ref={textareaRef}
               className="chat-widget-input"
@@ -756,7 +840,7 @@ export default function ChatWidget() {
             />
             <button
               className="chat-widget-send"
-              onClick={handleSendMessage}
+              onClick={() => handleSendMessage()}
               disabled={!input.trim() || isLoading}
               aria-label="Enviar mensagem"
             >
