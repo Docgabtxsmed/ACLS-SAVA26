@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import Navbar from '../components/Navbar'
@@ -10,16 +10,28 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { signUp } = useAuth()
+  const { signUp, isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  // Redireciona usuarios ja autenticados
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/')
+    }
+  }, [isAuthenticated, navigate])
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     setError(null)
 
-    // Validação básica
-    if (password.length < 6) {
-      setError('A senha deve ter no mínimo 6 caracteres')
+    // Validação: mínimo 8 caracteres + pelo menos 1 número
+    if (password.length < 8) {
+      setError('A senha deve ter no mínimo 8 caracteres')
+      return
+    }
+
+    if (!/\d/.test(password)) {
+      setError('A senha deve conter pelo menos um número')
       return
     }
 
@@ -77,7 +89,7 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="register-input"
-                placeholder="Mínimo 6 caracteres"
+                placeholder="Mínimo 8 caracteres e 1 número"
                 required
                 disabled={isLoading}
               />

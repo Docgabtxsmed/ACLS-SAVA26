@@ -90,8 +90,9 @@ async def chat(req: Request, request: ChatRequest, user: dict = Depends(verify_s
         answer = await ask(request.question)
         return ChatResponse(answer=answer)
     except Exception as e:
-        # status_code=500 = "Internal Server Error" (erro do servidor)
-        raise HTTPException(status_code=500, detail=str(e))
+        # Loga o erro interno sem expor detalhes ao cliente
+        print(f"[ERROR] /chat: {e}")
+        raise HTTPException(status_code=500, detail="Erro interno ao processar a pergunta.")
 
 
 # ============================================================
@@ -128,8 +129,9 @@ async def chat_stream(req: Request, request: ChatRequest, user: dict = Depends(v
             # Quando todos os tokens foram enviados, sinaliza o fim
             yield {"event": "done", "data": json.dumps({"status": "complete"})}
         except Exception as e:
-            # Se der erro, envia como evento "error"
-            yield {"event": "error", "data": json.dumps({"error": str(e)})}
+            # Loga o erro interno sem expor detalhes ao cliente
+            print(f"[ERROR] /chat/stream: {e}")
+            yield {"event": "error", "data": json.dumps({"error": "Erro interno ao processar a pergunta."})}
 
     # EventSourceResponse envia os eventos SSE pela conexao HTTP
     return EventSourceResponse(event_generator())
@@ -139,67 +141,69 @@ async def chat_stream(req: Request, request: ChatRequest, user: dict = Depends(v
 # SECAO: Endpoint de Ingestao
 # ============================================================
 @router.post("/ingest")
-async def ingest(is_admin: bool = Depends(verify_admin_key)):
+@limiter.limit("5/minute")
+async def ingest(req: Request, is_admin: bool = Depends(verify_admin_key)):
     """Processa todos os PDFs da pasta configurada e armazena no ChromaDB. Requer chave de admin."""
     try:
         result = ingest_pdfs()
         return result
     except FileNotFoundError as e:
-        # 404 = "Not Found" (pasta ou PDFs nao encontrados)
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"[ERROR] /ingest: {e}")
+        raise HTTPException(status_code=500, detail="Erro interno durante a ingestão.")
 
 
 # ============================================================
 # SECAO: Endpoint de Upload + Ingestao
 # ============================================================
 @router.post("/ingest/upload")
-async def ingest_upload(file: UploadFile, is_admin: bool = Depends(verify_admin_key)):
-    """Recebe upload de um PDF, salva em disco e processa.
-
-    CONCEITO: UploadFile
-    Tipo especial do FastAPI para receber arquivos via HTTP.
-    O frontend envia o arquivo como multipart/form-data
-    (o mesmo formato que formularios HTML com <input type="file">).
-    """
+@limiter.limit("5/minute")
+async def ingest_upload(req: Request, file: UploadFile, is_admin: bool = Depends(verify_admin_key)):
+    """Recebe upload de um PDF, salva em disco e processa. Requer chave de admin."""
     # Validacao: so aceita arquivos .pdf
     if not file.filename or not file.filename.endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="Only PDF files are accepted")
+        raise HTTPException(status_code=400, detail="Apenas arquivos PDF são aceitos.")
 
-    # Cria a pasta se nao existir
-    # parents=True = cria pastas intermediarias se necessario
-    # exist_ok=True = nao da erro se a pasta ja existir
+    # Previne path traversal: extrai apenas o nome do arquivo, sem caminhos
+    safe_filename = Path(file.filename).name
+    if ".." in safe_filename or "/" in safe_filename or "\\" in safe_filename:
+        raise HTTPException(status_code=400, detail="Nome de arquivo inválido.")
+
+    # Limite de tamanho: 50MB
+    MAX_SIZE = 50 * 1024 * 1024
+    content = await file.read()
+    if len(content) > MAX_SIZE:
+        raise HTTPException(status_code=413, detail="Arquivo muito grande. Limite: 50MB.")
+
     pdf_dir = Path(PDF_DIR)
     pdf_dir.mkdir(parents=True, exist_ok=True)
 
-    # Salva o arquivo em disco
-    file_path = pdf_dir / file.filename
-    content = await file.read()        # Le o conteudo do upload (assincrono)
-    file_path.write_bytes(content)     # Escreve os bytes no disco
+    file_path = pdf_dir / safe_filename
+    file_path.write_bytes(content)
 
-    # Processa todos os PDFs (incluindo o novo)
     try:
         result = ingest_pdfs()
         return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"[ERROR] /ingest/upload: {e}")
+        raise HTTPException(status_code=500, detail="Erro interno durante a ingestão.")
 
 
 # ============================================================
 # SECAO: Endpoints de Utilidade
 # ============================================================
 @router.get("/stats")
-async def stats():
-    """Retorna estatisticas do vector store (quantos chunks armazenados)."""
+async def stats(user: dict = Depends(verify_supabase_token)):
+    """Retorna estatisticas do vector store (quantos chunks armazenados). Requer autenticação."""
     try:
         return get_ingested_stats()
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Erro ao buscar estatísticas.")
 
 
 @router.get("/health")
-async def health():
+async def health(user: dict = Depends(verify_supabase_token)):
     """Health check — endpoint para verificar se o servidor esta funcionando.
     Usado por ferramentas de monitoramento e load balancers."""
     return {"status": "ok", "service": "SAVA ACLS RAG API"}

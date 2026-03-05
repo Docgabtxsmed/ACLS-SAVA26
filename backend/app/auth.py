@@ -151,9 +151,17 @@ async def verify_supabase_token(authorization: str = Header(...)) -> dict[str, A
                 detail="Não foi possível validar o token. Verifique as configurações do Supabase.",
             )
 
+        # Validar que o claim essencial existe
+        user_id = payload.get("sub")
+        if not user_id:
+            raise HTTPException(
+                status_code=401,
+                detail="Token inválido: identificador de usuário ausente.",
+            )
+
         # Retornar dados essenciais do usuário
         return {
-            "sub": payload.get("sub"),
+            "sub": user_id,
             "email": payload.get("email"),
             "role": payload.get("role"),
         }
