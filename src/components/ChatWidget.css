@@ -77,6 +77,50 @@
   margin: 0;
 }
 
+.chat-widget-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.chat-widget-conversations-button {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+.chat-widget-conversations-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-primary);
+}
+
+.chat-widget-new-conversation {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+.chat-widget-new-conversation:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-primary);
+}
+
 .chat-widget-close {
   width: 32px;
   height: 32px;
@@ -87,11 +131,134 @@
   color: var(--color-text-secondary);
   transition: all var(--transition-fast);
   cursor: pointer;
+  background: transparent;
+  border: none;
 }
 
 .chat-widget-close:hover {
   background: rgba(255, 255, 255, 0.08);
   color: var(--color-text-primary);
+}
+
+/* Sidebar de conversas */
+.chat-widget-sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background: var(--color-bg-card);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  animation: chatWidgetSidebarSlideIn 0.2s ease;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes chatWidgetSidebarSlideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.chat-widget-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.chat-widget-sidebar-header h4 {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.chat-widget-sidebar-close {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+.chat-widget-sidebar-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-primary);
+}
+
+.chat-widget-sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-sm);
+}
+
+.chat-widget-sidebar-loading,
+.chat-widget-sidebar-empty {
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.chat-widget-conversation-item {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-bottom: var(--space-xs);
+}
+
+.chat-widget-conversation-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.chat-widget-conversation-item.active {
+  background: rgba(233, 69, 96, 0.15);
+  border-left: 3px solid var(--color-accent);
+}
+
+.chat-widget-conversation-title {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-widget-conversation-time {
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+/* Warning de erro ao salvar */
+.chat-widget-save-warning {
+  padding: var(--space-xs) var(--space-md);
+  background: rgba(255, 193, 7, 0.15);
+  color: #ffc107;
+  font-size: var(--font-size-xs);
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* Área de mensagens */
@@ -140,7 +307,9 @@
 
 /* Mensagens */
 .chat-widget-message {
+  position: relative;
   display: flex;
+  flex-direction: column;
   max-width: 80%;
   animation: chatWidgetMessageFadeIn 0.3s ease;
 }
@@ -159,10 +328,12 @@
 .chat-widget-message--user {
   align-self: flex-end;
   margin-left: auto;
+  align-items: flex-end;
 }
 
 .chat-widget-message--assistant {
   align-self: flex-start;
+  align-items: flex-start;
 }
 
 .chat-widget-message--error {
@@ -176,6 +347,49 @@
   font-size: var(--font-size-sm);
   line-height: 1.5;
   word-wrap: break-word;
+}
+
+.chat-widget-copy-button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--color-text-secondary);
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: all var(--transition-fast);
+  z-index: 10;
+}
+
+.chat-widget-message:hover .chat-widget-copy-button {
+  opacity: 1;
+}
+
+.chat-widget-copy-button:hover {
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--color-text-primary);
+}
+
+.chat-widget-timestamp {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+  padding: 0 var(--space-xs);
+}
+
+.chat-widget-message--user .chat-widget-timestamp {
+  text-align: right;
+}
+
+.chat-widget-message--assistant .chat-widget-timestamp {
+  text-align: left;
 }
 
 /* Estilos para Markdown */
@@ -289,6 +503,8 @@
 
 .chat-widget-input {
   flex: 1;
+  min-height: 40px;
+  max-height: 120px;
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.05);
@@ -297,6 +513,9 @@
   font-size: var(--font-size-sm);
   font-family: inherit;
   transition: all var(--transition-fast);
+  resize: none;
+  overflow-y: auto;
+  line-height: 1.5;
 }
 
 .chat-widget-input:focus {

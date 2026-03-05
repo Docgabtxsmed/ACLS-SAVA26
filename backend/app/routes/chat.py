@@ -16,7 +16,10 @@ from pathlib import Path
 # APIRouter: organiza endpoints em grupos (ao inves de jogar tudo no main.py)
 # HTTPException: retorna erros HTTP padronizados (400, 404, 500, etc.)
 # UploadFile: tipo especial para receber uploads de arquivos
-from fastapi import APIRouter, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile
+
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 # CONCEITO: Pydantic BaseModel
 # Pydantic valida dados automaticamente. Se alguem enviar um campo
@@ -28,6 +31,7 @@ from pydantic import BaseModel
 # continuamente (streaming). Usado para o endpoint /chat/stream.
 from sse_starlette.sse import EventSourceResponse
 
+from app.auth import verify_admin_key, verify_supabase_token
 from app.config import PDF_DIR
 from app.services.ingest import get_ingested_stats, ingest_pdfs
 from app.services.rag import ask, ask_stream
@@ -36,6 +40,9 @@ from app.services.rag import ask, ask_stream
 # prefix="/api" = todas as rotas deste arquivo comecam com /api
 #   (ex: /api/chat, /api/ingest, /api/health)
 # tags=["chat"] = agrupa as rotas na documentacao /docs
+# Rate limiter para os endpoints de chat (30 req/min por IP)
+limiter = Limiter(key_func=get_remote_address)
+
 router = APIRouter(prefix="/api", tags=["chat"])
 
 
@@ -68,8 +75,9 @@ class ChatResponse(BaseModel):
 #
 # response_model=ChatResponse = define o formato da resposta na documentacao
 @router.post("/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
-    """Recebe uma pergunta e retorna a resposta completa."""
+@limiter.limit("30/minute")
+async def chat(req: Request, request: ChatRequest, user: dict = Depends(verify_supabase_token)):
+    """Recebe uma pergunta e retorna a resposta completa. Requer autenticação."""
 
     # .strip() remove espacos em branco. Se a pergunta estiver vazia:
     if not request.question.strip():
@@ -101,8 +109,9 @@ async def chat(request: ChatRequest):
 #   4. Frontend recebe e exibe em tempo real (como o ChatGPT)
 #   5. Quando termina, envia um evento "done"
 @router.post("/chat/stream")
-async def chat_stream(request: ChatRequest):
-    """Recebe uma pergunta e retorna a resposta via streaming (token por token)."""
+@limiter.limit("30/minute")
+async def chat_stream(req: Request, request: ChatRequest, user: dict = Depends(verify_supabase_token)):
+    """Recebe uma pergunta e retorna a resposta via streaming (token por token). Requer autenticação."""
     if not request.question.strip():
         raise HTTPException(status_code=400, detail="Question cannot be empty")
 
@@ -130,8 +139,8 @@ async def chat_stream(request: ChatRequest):
 # SECAO: Endpoint de Ingestao
 # ============================================================
 @router.post("/ingest")
-async def ingest():
-    """Processa todos os PDFs da pasta configurada e armazena no ChromaDB."""
+async def ingest(is_admin: bool = Depends(verify_admin_key)):
+    """Processa todos os PDFs da pasta configurada e armazena no ChromaDB. Requer chave de admin."""
     try:
         result = ingest_pdfs()
         return result
@@ -146,7 +155,7 @@ async def ingest():
 # SECAO: Endpoint de Upload + Ingestao
 # ============================================================
 @router.post("/ingest/upload")
-async def ingest_upload(file: UploadFile):
+async def ingest_upload(file: UploadFile, is_admin: bool = Depends(verify_admin_key)):
     """Recebe upload de um PDF, salva em disco e processa.
 
     CONCEITO: UploadFile
