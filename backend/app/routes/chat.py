@@ -10,7 +10,10 @@
 # ============================================================
 
 import json
+import logging
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 # CONCEITO: Imports do FastAPI
 # APIRouter: organiza endpoints em grupos (ao inves de jogar tudo no main.py)
@@ -87,7 +90,7 @@ async def chat(request: Request, body: ChatRequest, user: dict = Depends(verify_
         return ChatResponse(answer=answer)
     except Exception as e:
         # Loga o erro interno sem expor detalhes ao cliente
-        print(f"[ERROR] /chat: {e}")
+        logger.error("/chat: %s", e, exc_info=True)
         raise HTTPException(status_code=500, detail="Erro interno ao processar a pergunta.")
 
 
@@ -126,7 +129,7 @@ async def chat_stream(request: Request, body: ChatRequest, user: dict = Depends(
             yield {"event": "done", "data": json.dumps({"status": "complete"})}
         except Exception as e:
             # Loga o erro interno sem expor detalhes ao cliente
-            print(f"[ERROR] /chat/stream: {e}")
+            logger.error("/chat/stream: %s", e, exc_info=True)
             yield {"event": "error", "data": json.dumps({"error": "Erro interno ao processar a pergunta."})}
 
     # EventSourceResponse envia os eventos SSE pela conexao HTTP
@@ -146,7 +149,7 @@ async def ingest(request: Request, is_admin: bool = Depends(verify_admin_key)):
     except FileNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
-        print(f"[ERROR] /ingest: {e}")
+        logger.error("/ingest: %s", e, exc_info=True)
         raise HTTPException(status_code=500, detail="Erro interno durante a ingestão.")
 
 
@@ -186,7 +189,7 @@ async def ingest_upload(request: Request, file: UploadFile, is_admin: bool = Dep
         result = ingest_pdfs()
         return result
     except Exception as e:
-        print(f"[ERROR] /ingest/upload: {e}")
+        logger.error("/ingest/upload: %s", e, exc_info=True)
         raise HTTPException(status_code=500, detail="Erro interno durante a ingestão.")
 
 

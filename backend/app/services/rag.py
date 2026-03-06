@@ -129,6 +129,14 @@ def build_rag_chain():
 
     # Passo preparatorio: criar o retriever a partir do ChromaDB
     vector_store = get_vector_store()
+
+    # Validacao: verificar se existem documentos indexados
+    if vector_store._collection.count() == 0:
+        raise ValueError(
+            "Nenhum documento indexado no ChromaDB. "
+            "Execute a ingestao de PDFs antes de usar o chat."
+        )
+
     retriever = vector_store.as_retriever(
         # "similarity" = busca por similaridade do cosseno
         # O ChromaDB encontra os chunks cujos vetores sao mais

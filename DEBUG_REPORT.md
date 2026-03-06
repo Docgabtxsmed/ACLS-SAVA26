@@ -78,28 +78,23 @@ async for chunk in chain.astream({"question": question}):
 ### BUG-6 — Sem validação de ChromaDB vazio antes de invocar RAG
 **Arquivo:** `backend/app/services/rag.py` (função `build_rag_chain`)
 **Descrição:** Se nenhum PDF foi indexado, `retriever` retorna lista vazia e o LLM recebe contexto vazio — sem aviso ao usuário.
-**Fix sugerido:** Verificar `collection.count() > 0` antes de montar a chain; retornar mensagem amigável se vazio.
-**Status:** 🔲 Pendente
+**Fix aplicado:** Adicionada verificação `vector_store._collection.count() == 0` em `build_rag_chain()`. Levanta `ValueError` com mensagem amigável.
+**Status:** ✅ Corrigido (06/03/2026)
 
 ---
 
 ### BUG-7 — OPENAI_API_KEY sem validação no startup
 **Arquivo:** `backend/app/config.py`
 **Descrição:** Se `OPENAI_API_KEY` estiver vazia, o servidor inicia normalmente mas falha na primeira chamada ao LLM, sem mensagem clara.
-**Fix sugerido:**
-```python
-if not settings.OPENAI_API_KEY:
-    sys.exit("OPENAI_API_KEY não configurada. Servidor encerrado.")
-```
-**Status:** 🔲 Pendente
+**Fix aplicado:** Adicionada validação com `sys.exit()` logo após carregar a variável. Servidor recusa iniciar sem a chave.
+**Status:** ✅ Corrigido (06/03/2026)
 
 ---
 
 ### BUG-8 — ProtectedRoute definido mas não utilizado
 **Arquivo:** `src/App.tsx`
-**Descrição:** Componente `ProtectedRoute` foi criado mas nenhuma rota usa — rotas autenticadas estão desprotegidas no nível de roteamento (proteção existe apenas no ChatWidget).
-**Fix sugerido:** Envolver as rotas `/algoritmos/*` e `/chat` com `<ProtectedRoute>`, ou remover `ProtectedRoute` se não for usar.
-**Status:** 🔲 Pendente
+**Descrição:** Componente `ProtectedRoute` foi mencionado no plano original mas nunca foi criado. Rotas de algoritmo são públicas por design (modelo freemium). Apenas o ChatWidget exige autenticação.
+**Status:** ✅ N/A — comportamento intencional (freemium)
 
 ---
 
@@ -108,21 +103,16 @@ if not settings.OPENAI_API_KEY:
 ### BUG-9 — key={idx} nas listas de mensagens
 **Arquivo:** `src/components/ChatWidget.tsx`
 **Descrição:** Usar índice do array como `key` no React pode causar re-renders incorretos quando mensagens são inseridas ou removidas no meio da lista.
-**Fix sugerido:** Gerar ID único por mensagem (ex: `crypto.randomUUID()` ou `Date.now() + Math.random()`).
-**Status:** 🔲 Pendente
+**Fix aplicado:** Adicionado campo `id: string` ao tipo `Message` com `crypto.randomUUID()`. Trocado `key={idx}` por `key={msg.id}`. `copiedIdx` agora usa `string` (id) em vez de `number`.
+**Status:** ✅ Corrigido (06/03/2026)
 
 ---
 
 ### BUG-10 — print() em vez de logging estruturado
 **Arquivo:** `backend/app/routes/chat.py`
 **Descrição:** Erros internos são logados com `print()`. Em produção, usar `logging` permite controle de nível, formatação e integração com ferramentas de observabilidade.
-**Fix sugerido:**
-```python
-import logging
-logger = logging.getLogger(__name__)
-logger.error("Mensagem de erro", exc_info=True)
-```
-**Status:** 🔲 Pendente
+**Fix aplicado:** Substituídas 4 ocorrências de `print(f"[ERROR]...")` por `logger.error(..., exc_info=True)` com `logging.getLogger(__name__)`.
+**Status:** ✅ Corrigido (06/03/2026)
 
 ---
 

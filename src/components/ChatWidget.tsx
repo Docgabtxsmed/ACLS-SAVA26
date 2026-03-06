@@ -17,6 +17,7 @@ const SUGGESTED_PROMPTS = [
 
 // Tipos para mensagens locais (UI)
 type Message = {
+  id: string;
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
@@ -129,7 +130,7 @@ export default function ChatWidget() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentStreamedText, setCurrentStreamedText] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [copiedIdx, setCopiedIdx] = useState<string | null>(null);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
@@ -236,6 +237,7 @@ export default function ChatWidget() {
       if (error) throw error;
 
       const loadedMessages: Message[] = (data || []).map((msg: MessageFromDB) => ({
+        id: msg.id,
         role: msg.role,
         content: msg.content,
         timestamp: new Date(msg.created_at),
@@ -301,10 +303,10 @@ export default function ChatWidget() {
     await loadConversationMessages(conversationId);
   };
 
-  const handleCopyMessage = async (content: string, idx: number) => {
+  const handleCopyMessage = async (content: string, id: string) => {
     try {
       await navigator.clipboard.writeText(content);
-      setCopiedIdx(idx);
+      setCopiedIdx(id);
       setTimeout(() => setCopiedIdx(null), 2000);
     } catch (err) {
       console.error('Erro ao copiar:', err);
@@ -325,6 +327,7 @@ export default function ChatWidget() {
     if (!messageContent || isLoadingRef.current) return;
 
     const userMessage: Message = {
+      id: crypto.randomUUID(),
       role: 'user',
       content: messageContent,
       timestamp: new Date(),
@@ -428,7 +431,7 @@ export default function ChatWidget() {
                 const finalText = accumulatedText;
                 setMessages((prev) => [
                   ...prev,
-                  { role: 'assistant', content: finalText, timestamp: new Date() },
+                  { id: crypto.randomUUID(), role: 'assistant', content: finalText, timestamp: new Date() },
                 ]);
 
                 // Salvar mensagem do assistente (assíncrono)
@@ -464,7 +467,7 @@ export default function ChatWidget() {
         const finalText = accumulatedText;
         setMessages((prev) => [
           ...prev,
-          { role: 'assistant', content: finalText, timestamp: new Date() },
+          { id: crypto.randomUUID(), role: 'assistant', content: finalText, timestamp: new Date() },
         ]);
 
         // Salvar mensagem do assistente (assíncrono)
@@ -697,19 +700,19 @@ export default function ChatWidget() {
                   </div>
                 )}
 
-            {messages.map((msg, idx) => (
+            {messages.map((msg) => (
               <div
-                key={idx}
+                key={msg.id}
                 className={`chat-widget-message chat-widget-message--${msg.role}`}
               >
                 {msg.role === 'assistant' && (
                   <button
                     className="chat-widget-copy-button"
-                    onClick={() => handleCopyMessage(msg.content, idx)}
+                    onClick={() => handleCopyMessage(msg.content, msg.id)}
                     aria-label="Copiar mensagem"
                     title="Copiar mensagem"
                   >
-                    {copiedIdx === idx ? (
+                    {copiedIdx === msg.id ? (
                       <svg
                         width="16"
                         height="16"
