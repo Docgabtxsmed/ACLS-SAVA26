@@ -18,8 +18,7 @@ from pathlib import Path
 # UploadFile: tipo especial para receber uploads de arquivos
 from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile
 
-from slowapi import Limiter
-from slowapi.util import get_remote_address
+from app.limiter import limiter
 
 # CONCEITO: Pydantic BaseModel
 # Pydantic valida dados automaticamente. Se alguem enviar um campo
@@ -40,9 +39,6 @@ from app.services.rag import ask, ask_stream
 # prefix="/api" = todas as rotas deste arquivo comecam com /api
 #   (ex: /api/chat, /api/ingest, /api/health)
 # tags=["chat"] = agrupa as rotas na documentacao /docs
-# Rate limiter para os endpoints de chat (30 req/min por IP)
-limiter = Limiter(key_func=get_remote_address)
-
 router = APIRouter(prefix="/api", tags=["chat"])
 
 
@@ -76,18 +72,18 @@ class ChatResponse(BaseModel):
 # response_model=ChatResponse = define o formato da resposta na documentacao
 @router.post("/chat", response_model=ChatResponse)
 @limiter.limit("30/minute")
-async def chat(req: Request, request: ChatRequest, user: dict = Depends(verify_supabase_token)):
+async def chat(request: Request, body: ChatRequest, user: dict = Depends(verify_supabase_token)):
     """Recebe uma pergunta e retorna a resposta completa. Requer autenticação."""
 
     # .strip() remove espacos em branco. Se a pergunta estiver vazia:
-    if not request.question.strip():
+    if not body.question.strip():
         # HTTPException retorna um erro HTTP padronizado.
         # status_code=400 = "Bad Request" (erro do cliente)
         raise HTTPException(status_code=400, detail="Question cannot be empty")
 
     try:
         # await = espera a resposta do LLM (assincrono, nao trava)
-        answer = await ask(request.question)
+        answer = await ask(body.question)
         return ChatResponse(answer=answer)
     except Exception as e:
         # Loga o erro interno sem expor detalhes ao cliente
@@ -111,9 +107,9 @@ async def chat(req: Request, request: ChatRequest, user: dict = Depends(verify_s
 #   5. Quando termina, envia um evento "done"
 @router.post("/chat/stream")
 @limiter.limit("30/minute")
-async def chat_stream(req: Request, request: ChatRequest, user: dict = Depends(verify_supabase_token)):
+async def chat_stream(request: Request, body: ChatRequest, user: dict = Depends(verify_supabase_token)):
     """Recebe uma pergunta e retorna a resposta via streaming (token por token). Requer autenticação."""
-    if not request.question.strip():
+    if not body.question.strip():
         raise HTTPException(status_code=400, detail="Question cannot be empty")
 
     # CONCEITO: Async Generator (funcao geradora assincrona)
@@ -122,7 +118,7 @@ async def chat_stream(req: Request, request: ChatRequest, user: dict = Depends(v
     async def event_generator():
         try:
             # async for = loop que espera cada token do LLM
-            async for token in ask_stream(request.question):
+            async for token in ask_stream(body.question):
                 # Cada token e enviado como um evento "token" com dados JSON
                 yield {"event": "token", "data": json.dumps({"token": token})}
 
@@ -142,7 +138,7 @@ async def chat_stream(req: Request, request: ChatRequest, user: dict = Depends(v
 # ============================================================
 @router.post("/ingest")
 @limiter.limit("5/minute")
-async def ingest(req: Request, is_admin: bool = Depends(verify_admin_key)):
+async def ingest(request: Request, is_admin: bool = Depends(verify_admin_key)):
     """Processa todos os PDFs da pasta configurada e armazena no ChromaDB. Requer chave de admin."""
     try:
         result = ingest_pdfs()
@@ -159,10 +155,14 @@ async def ingest(req: Request, is_admin: bool = Depends(verify_admin_key)):
 # ============================================================
 @router.post("/ingest/upload")
 @limiter.limit("5/minute")
-async def ingest_upload(req: Request, file: UploadFile, is_admin: bool = Depends(verify_admin_key)):
+async def ingest_upload(request: Request, file: UploadFile, is_admin: bool = Depends(verify_admin_key)):
     """Recebe upload de um PDF, salva em disco e processa. Requer chave de admin."""
     # Validacao: so aceita arquivos .pdf
     if not file.filename or not file.filename.endswith(".pdf"):
+        raise HTTPException(status_code=400, detail="Apenas arquivos PDF são aceitos.")
+
+    # Validacao do tipo MIME (evita arquivos maliciosos renomeados para .pdf)
+    if file.content_type not in ("application/pdf", "application/x-pdf"):
         raise HTTPException(status_code=400, detail="Apenas arquivos PDF são aceitos.")
 
     # Previne path traversal: extrai apenas o nome do arquivo, sem caminhos
@@ -203,7 +203,7 @@ async def stats(user: dict = Depends(verify_supabase_token)):
 
 
 @router.get("/health")
-async def health(user: dict = Depends(verify_supabase_token)):
+async def health():
     """Health check — endpoint para verificar se o servidor esta funcionando.
     Usado por ferramentas de monitoramento e load balancers."""
     return {"status": "ok", "service": "SAVA ACLS RAG API"}

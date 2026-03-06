@@ -57,6 +57,23 @@
   text-align: center;
 }
 
+.login-success {
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(39, 174, 96, 0.15);
+  border: 1px solid rgba(39, 174, 96, 0.3);
+  border-radius: var(--radius-md);
+  color: #2ecc71;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-lg);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.login-forgot {
+  text-align: right;
+  margin-top: calc(var(--space-xs) * -1);
+}
+
 .login-form {
   display: flex;
   flex-direction: column;

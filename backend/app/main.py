@@ -17,23 +17,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 # Rate limiting com slowapi
-from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
-from slowapi.util import get_remote_address
+
+# Importa o limiter compartilhado (usado tambem em routes/chat.py)
+from app.limiter import limiter
 
 # Importa o router do chat.py (que contem todos os endpoints /api/...)
 from app.routes.chat import router as chat_router
-
-# ============================================================
-# SECAO: Configuracao do Rate Limiter
-# ============================================================
-# CONCEITO: Rate Limiting
-# Limita o número de requisições que um IP pode fazer por minuto.
-# Isso protege contra abuso e controla custos da OpenAI.
-#
-# get_remote_address = função que extrai o IP do cliente da requisição
-# default_limits = limite padrão para todas as rotas (pode ser sobrescrito)
-limiter = Limiter(key_func=get_remote_address, default_limits=["60/minute"])
 
 # ============================================================
 # SECAO: Criacao da Aplicacao FastAPI

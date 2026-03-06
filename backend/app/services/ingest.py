@@ -10,6 +10,8 @@
 
 from pathlib import Path
 
+import chromadb
+
 # ============================================================
 # SECAO: Imports do LangChain
 # ============================================================
@@ -171,12 +173,23 @@ def ingest_pdfs(pdf_dir: str | None = None) -> dict:
     # Etapa 2: Dividir em chunks
     chunks = split_documents(documents)
 
-    # Etapa 3: Gerar embeddings e armazenar no ChromaDB.
+    # Etapa 3: Limpar dados anteriores para evitar duplicatas na re-ingestao.
+    client = chromadb.PersistentClient(path=CHROMA_PERSIST_DIR)
+    try:
+        client.delete_collection(COLLECTION_NAME)
+    except ValueError:
+        pass  # Collection ainda nao existe
+
+    # Etapa 4: Gerar embeddings e armazenar no ChromaDB.
     # add_documents() faz DUAS coisas automaticamente:
     #   1. Chama a embedding_function para cada chunk (texto → vetor)
     #   2. Salva o vetor + texto + metadados no ChromaDB
     vector_store = get_vector_store()
     vector_store.add_documents(chunks)
+
+    # Invalida o cache da chain RAG para usar os novos documentos
+    import app.services.rag as rag_module
+    rag_module._rag_chain = None
 
     # Retorna estatisticas da ingestao
     return {

@@ -13,6 +13,7 @@
 # Um "iterador assincrono" — permite entregar valores um por um
 # de forma assincrona (sem travar o programa). Usado no streaming.
 from collections.abc import AsyncIterator
+from operator import itemgetter
 
 # ============================================================
 # SECAO: Imports do LangChain Core
@@ -25,10 +26,6 @@ from langchain_core.output_parsers import StrOutputParser
 # ChatPromptTemplate: modelo de prompt com placeholders.
 # Permite criar mensagens com {variaveis} que sao preenchidas depois.
 from langchain_core.prompts import ChatPromptTemplate
-
-# RunnablePassthrough: "passa adiante" o valor sem modificar.
-# Usado para manter a pergunta original enquanto o retriever busca contexto.
-from langchain_core.runnables import RunnablePassthrough
 
 # ChatOpenAI: interface do LangChain para os modelos de chat da OpenAI.
 from langchain_openai import ChatOpenAI
@@ -153,8 +150,8 @@ def build_rag_chain():
     # ============================================================
     #
     # PASSO 1: O dicionario executa em PARALELO:
-    #   "context" → retriever busca 4 chunks | format_docs formata com fontes
-    #   "question" → RunnablePassthrough() passa a pergunta sem alterar
+    #   "context" → itemgetter extrai a pergunta | retriever busca 4 chunks | format_docs formata
+    #   "question" → itemgetter extrai a pergunta como string
     #
     # PASSO 2: prompt recebe {"context": "...", "question": "..."}
     #   e preenche os placeholders do SYSTEM_PROMPT e HUMAN_TEMPLATE
@@ -163,13 +160,30 @@ def build_rag_chain():
     #
     # PASSO 4: StrOutputParser() extrai apenas o texto da resposta
     chain = (
-        {"context": retriever | format_docs, "question": RunnablePassthrough()}
+        {"context": itemgetter("question") | retriever | format_docs, "question": itemgetter("question")}
         | prompt
         | get_llm()
         | StrOutputParser()
     )
 
     return chain
+
+
+# ============================================================
+# SECAO: Cache da Cadeia RAG (Singleton Lazy)
+# ============================================================
+# A chain e criada uma unica vez e reutilizada em todas as requisicoes.
+# Isso evita recriar o LLM, retriever e conexao ChromaDB a cada pergunta.
+# Quando novos documentos sao ingeridos, o cache e invalidado.
+_rag_chain = None
+
+
+def get_rag_chain():
+    """Retorna a chain RAG cacheada (cria na primeira chamada)."""
+    global _rag_chain
+    if _rag_chain is None:
+        _rag_chain = build_rag_chain()
+    return _rag_chain
 
 
 # ============================================================
@@ -186,7 +200,7 @@ def build_rag_chain():
 # quando o prato esta pronto.
 async def ask(question: str) -> str:
     """Faz uma pergunta e retorna a resposta completa (nao streaming)."""
-    chain = build_rag_chain()
+    chain = get_rag_chain()
     # ainvoke = versao assincrona de invoke (o "a" no inicio = async)
     return await chain.ainvoke({"question": question})
 
@@ -200,7 +214,7 @@ async def ask(question: str) -> str:
 # como voce ve no ChatGPT (as palavras aparecem uma por uma).
 async def ask_stream(question: str) -> AsyncIterator[str]:
     """Faz uma pergunta e retorna a resposta token por token (streaming)."""
-    chain = build_rag_chain()
+    chain = get_rag_chain()
     # astream = versao assincrona de stream
     # async for = loop que espera cada token chegar
     async for chunk in chain.astream({"question": question}):

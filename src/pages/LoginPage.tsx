@@ -77,6 +77,12 @@ export default function LoginPage() {
               />
             </div>
 
+            <div className="login-forgot">
+              <Link to="/forgot-password" className="login-link">
+                Esqueci minha senha
+              </Link>
+            </div>
+
             <button type="submit" className="login-button" disabled={isLoading}>
               {isLoading ? 'Entrando...' : 'Entrar'}
             </button>

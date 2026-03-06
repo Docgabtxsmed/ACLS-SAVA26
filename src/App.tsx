@@ -15,6 +15,7 @@ import AnaphylaxisPage from './pages/AnaphylaxisPage'
 import PregnantCardiacArrestPage from './pages/PregnantCardiacArrestPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ChatWidget from './components/ChatWidget'
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/pregnant-cardiac-arrest" element={<PregnantCardiacArrestPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Routes>
       <ChatWidget />
     </AuthProvider>
