@@ -535,18 +535,17 @@ function PCRTab() {
               stepNumber={5}
               items={[
                 'Compressões de alta qualidade',
-                'NÃO administrar Epinefrina no 1º ciclo',
+                'Epinefrina 10 µg/kg IV/IO o mais rápido possível',
               ]}
             />
             <FlowchartArrow direction="down" />
             <FlowchartNode
               type="critical"
-              title="CICLO 2 — RCP + EPINEFRINA"
+              title="CICLO 2 — RCP + 2ª DOSE EPINEFRINA"
               stepNumber={6}
               items={[
-                'Epinefrina 10 µg/kg IV/IO',
-                'Repetir a cada 3-5 min',
-                'Pesquisar causas reversíveis',
+                'Repetir Epinefrina 10 µg/kg IV/IO a cada 3-5 min',
+                'Pesquisar causas reversíveis (6Hs e 5Ts)',
               ]}
             />
             <FlowchartArrow direction="down" />
@@ -691,7 +690,7 @@ function CausasTab() {
                 <td><strong>10</strong></td>
                 <td style={{ color: '#e94560' }}>QT Longo</td>
                 <td>Congênito ou adquirido (ondansetrona, haloperidol)</td>
-                <td>MgSO₄ 2 mg/kg IV</td>
+                <td>MgSO₄ 25–50 mg/kg IV (máx 2 g)</td>
               </tr>
               <tr>
                 <td><strong>11</strong></td>
@@ -955,8 +954,8 @@ function PosPCRTab() {
               </tr>
               <tr>
                 <td><strong>Temperatura</strong></td>
-                <td>32–34°C por 48h</td>
-                <td>Hipotermia leve se comatoso pós-PCR extra-hospitalar</td>
+                <td>32–36°C por ≥ 24h</td>
+                <td>TTM se comatoso pós-PCR; evitar febre</td>
               </tr>
               <tr>
                 <td><strong>Glicemia</strong></td>

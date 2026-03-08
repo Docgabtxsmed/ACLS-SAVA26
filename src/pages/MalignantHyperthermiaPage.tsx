@@ -362,7 +362,7 @@ function TratamentoTab() {
               'SF 0,9% gelado IV (sem Ringer Lactato)',
               'Compressas de gelo em axilas, virilha, pescoço',
               'Lavagem gástrica e vesical com SF gelado',
-              'Meta: T° < 38,5°C — interromper quando atingir',
+              'Meta: T° < 38°C — interromper quando atingir (evitar hipotermia)',
             ]}
           />
           <FlowchartArrow direction="down" />
@@ -396,7 +396,7 @@ function TratamentoTab() {
             items={[
               'Monitorização por no mínimo 72 horas',
               'Dantrolene de manutenção: 1 mg/kg IV 6/6h por 24-48h',
-              'Risco de recrudescência em até 25% dos casos',
+              'Risco de recrudescência em até 20% dos casos',
             ]}
           />
         </div>
@@ -427,7 +427,7 @@ function TratamentoTab() {
             accentColor="#1565c0"
             items={[
               { label: 'SF 0,9% gelado', detail: 'IV em acesso calibroso' },
-              { label: 'Alvo', detail: 'T° < 38,5°C' },
+              { label: 'Alvo', detail: 'T° < 38°C' },
               { label: 'NÃO USAR', detail: 'Ringer Lactato (contém K⁺)' },
             ]}
           />
@@ -445,7 +445,7 @@ function PosProcedimentoTab() {
         <div>
           <div className="content-alert-title">Risco de Recrudescência</div>
           <div className="content-alert-text">
-            A recrudescência (retorno da crise) ocorre em até 25% dos casos, geralmente nas primeiras
+            A recrudescência (retorno da crise) ocorre em até 20% dos casos, geralmente nas primeiras
             24-48 horas. Monitorização intensiva em UTI é mandatória.
           </div>
         </div>

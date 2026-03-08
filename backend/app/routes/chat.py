@@ -37,6 +37,7 @@ from app.auth import verify_admin_key, verify_supabase_token
 from app.config import PDF_DIR
 from app.services.ingest import get_ingested_stats, ingest_pdfs
 from app.services.rag import ask, ask_stream
+from app.services.memory import add_to_history, get_history, clear_history
 
 # CONCEITO: APIRouter
 # prefix="/api" = todas as rotas deste arquivo comecam com /api
@@ -77,19 +78,29 @@ class ChatResponse(BaseModel):
 @limiter.limit("30/minute")
 async def chat(request: Request, body: ChatRequest, user: dict = Depends(verify_supabase_token)):
     """Recebe uma pergunta e retorna a resposta completa. Requer autenticação."""
-
-    # .strip() remove espacos em branco. Se a pergunta estiver vazia:
     if not body.question.strip():
-        # HTTPException retorna um erro HTTP padronizado.
-        # status_code=400 = "Bad Request" (erro do cliente)
         raise HTTPException(status_code=400, detail="Question cannot be empty")
 
     try:
-        # await = espera a resposta do LLM (assincrono, nao trava)
-        answer = await ask(body.question)
+        user_id = user["sub"]
+
+        # Busca o histórico de conversa do usuário
+        history = get_history(user_id)
+
+        # Converte para o formato que o LangChain espera
+        chat_history = []
+        for msg in history:
+            chat_history.append((msg["role"], msg["content"]))
+
+        # Faz a pergunta com o histórico
+        answer = await ask(body.question, chat_history)
+
+        # Salva a interação no histórico
+        add_to_history(user_id, "user", body.question)
+        add_to_history(user_id, "assistant", answer)
+
         return ChatResponse(answer=answer)
     except Exception as e:
-        # Loga o erro interno sem expor detalhes ao cliente
         logger.error("/chat: %s", e, exc_info=True)
         raise HTTPException(status_code=500, detail="Erro interno ao processar a pergunta.")
 
@@ -111,30 +122,38 @@ async def chat(request: Request, body: ChatRequest, user: dict = Depends(verify_
 @router.post("/chat/stream")
 @limiter.limit("30/minute")
 async def chat_stream(request: Request, body: ChatRequest, user: dict = Depends(verify_supabase_token)):
-    """Recebe uma pergunta e retorna a resposta via streaming (token por token). Requer autenticação."""
+    """Recebe uma pergunta e retorna a resposta via streaming. Requer autenticação."""
     if not body.question.strip():
         raise HTTPException(status_code=400, detail="Question cannot be empty")
 
-    # CONCEITO: Async Generator (funcao geradora assincrona)
-    # event_generator() e uma funcao que usa "yield" para entregar
-    # dados um por um. Cada yield envia um evento SSE para o cliente.
+    user_id = user["sub"]
+    history = get_history(user_id)
+    chat_history = [(msg["role"], msg["content"]) for msg in history]
+
     async def event_generator():
+        full_response = []
         try:
-            # async for = loop que espera cada token do LLM
-            async for token in ask_stream(body.question):
-                # Cada token e enviado como um evento "token" com dados JSON
+            async for token in ask_stream(body.question, chat_history):
+                full_response.append(token)
                 yield {"event": "token", "data": json.dumps({"token": token})}
 
-            # Quando todos os tokens foram enviados, sinaliza o fim
+            # Salva no histórico após o streaming completo
+            answer = "".join(full_response)
+            add_to_history(user_id, "user", body.question)
+            add_to_history(user_id, "assistant", answer)
+
             yield {"event": "done", "data": json.dumps({"status": "complete"})}
         except Exception as e:
-            # Loga o erro interno sem expor detalhes ao cliente
             logger.error("/chat/stream: %s", e, exc_info=True)
             yield {"event": "error", "data": json.dumps({"error": "Erro interno ao processar a pergunta."})}
 
-    # EventSourceResponse envia os eventos SSE pela conexao HTTP
     return EventSourceResponse(event_generator())
 
+@router.delete("/chat/history")
+async def delete_history(user: dict = Depends(verify_supabase_token)):
+    """Limpa o histórico de conversa do usuário. Requer autenticação."""
+    clear_history(user["sub"])
+    return {"status": "ok", "message": "Histórico limpo."}
 
 # ============================================================
 # SECAO: Endpoint de Ingestao

@@ -290,7 +290,7 @@ function TratamentoTab() {
             title="INICIAR EMULSÃO LIPÍDICA 20%"
             stepNumber={2}
             items={[
-              'Bolus: 1,5 mL/kg em 1 minuto',
+              'Bolus: 1,5 mL/kg em 2–3 minutos',
               'Infusão: 0,25 mL/kg/min',
               'Pode repetir bolus 1-2x se instável',
               'Dose máxima: 12 mL/kg',
@@ -344,7 +344,7 @@ function TratamentoTab() {
             type="info"
             title="MONITORIZAÇÃO PÓS-EVENTO"
             items={[
-              'Manter em UTI por no mínimo 12 horas',
+              'Manter em UTI por no mínimo 2–6 horas (mais se bupivacaína)',
               'Monitorar recorrência (redistribuição do AL)',
               'Manter infusão de lipídica por 15 min após estabilização',
             ]}

@@ -478,7 +478,7 @@ function TratamentoTab() {
             stepNumber={2}
             items={[
               'Adulto: 0,3–0,5 mg IM (1:1.000) na coxa anterolateral',
-              'Criança: 0,01 mg/kg IM (máx 0,3 mg)',
+              'Criança: 0,01 mg/kg IM (máx 0,5 mg)',
               'Repetir a cada 5–15 minutos se necessário',
               'NÃO TEM CONTRAINDICAÇÃO ABSOLUTA',
             ]}
@@ -587,7 +587,7 @@ function TratamentoTab() {
             accentColor="#c62828"
             items={[
               { label: 'IM (adulto)', detail: '0,3–0,5 mg (1:1.000) na coxa' },
-              { label: 'IM (criança)', detail: '0,01 mg/kg (máx 0,3 mg)' },
+              { label: 'IM (criança)', detail: '0,01 mg/kg (máx 0,5 mg)' },
               { label: 'Repetir IM', detail: 'A cada 5–15 min se necessário' },
               { label: 'IV (refratário)', detail: '0,1 μg/kg/min em infusão contínua' },
             ]}
