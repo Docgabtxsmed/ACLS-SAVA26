@@ -22,13 +22,20 @@ export default function AlgorithmCard({ algorithm, index }: AlgorithmCardProps) 
       <div className="algo-card-glow" />
       <div className="algo-card-header">
         <span className="algo-card-icon">{algorithm.icon}</span>
-        {algorithm.caseNumber && (
-          <span className="algo-card-case">Caso {algorithm.caseNumber}</span>
-        )}
       </div>
       <h2 className="algo-card-title">{algorithm.title}</h2>
       <p className="algo-card-subtitle">{algorithm.subtitle}</p>
+      {algorithm.tema && (
+        <span className="algo-card-tema">{algorithm.tema}</span>
+      )}
       <p className="algo-card-desc">{algorithm.description}</p>
+      {algorithm.referencias && algorithm.referencias.length > 0 && (
+        <div className="algo-card-refs">
+          {algorithm.referencias.map((ref) => (
+            <span key={ref} className="algo-card-ref-tag">{ref}</span>
+          ))}
+        </div>
+      )}
       <div className="algo-card-footer">
         <span className="algo-card-cta">
           Ver Algoritmo

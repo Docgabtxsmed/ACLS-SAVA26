@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar';
 import AlgorithmCard from '../components/AlgorithmCard';
-import { algorithms, savaTopics } from '../data/algorithms';
+import { sections } from '../data/algorithms';
 import './HomePage.css';
 
 export default function HomePage() {
@@ -40,30 +40,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Algorithms Grid */}
+      {/* Algorithms by Severity */}
       <section className="algorithms-section">
         <div className="container">
-          <h2 className="section-heading">
-            <span className="section-heading-line" />
-            Escolha um Algoritmo
-            <span className="section-heading-line" />
-          </h2>
-          <div className="algorithms-grid">
-            {algorithms.map((algo, i) => (
-              <AlgorithmCard key={algo.id} algorithm={algo} index={i} />
-            ))}
-          </div>
-
-          <h2 className="section-heading" style={{ marginTop: 'var(--space-3xl)' }}>
-            <span className="section-heading-line" />
-            SAVA — Temas Especiais
-            <span className="section-heading-line" />
-          </h2>
-          <div className="algorithms-grid">
-            {savaTopics.map((algo, i) => (
-              <AlgorithmCard key={algo.id} algorithm={algo} index={i} />
-            ))}
-          </div>
+          {sections.map((section) => (
+            <div key={section.id} className="severity-section">
+              <div className="severity-header">
+                <div className="severity-indicator" style={{ '--severity-color': section.levelColor } as React.CSSProperties}>
+                  <span className="severity-dot" />
+                  <span className="severity-level">{section.level}</span>
+                </div>
+                <h2 className="section-heading">
+                  <span className="section-heading-line" />
+                  {section.label}
+                  <span className="section-heading-line" />
+                </h2>
+              </div>
+              <div className="algorithms-grid">
+                {section.items.map((algo, i) => (
+                  <AlgorithmCard key={algo.id} algorithm={algo} index={i} />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
